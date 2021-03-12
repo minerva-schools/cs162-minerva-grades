@@ -1,0 +1,368 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+body {
+    font-family: "Roboto", sans-serif;
+    background: #FFFFFF;
+}
+
+.top-container {
+    height: 89px;
+    float: top;
+}
+
+.logo {
+    position: absolute;
+    left: 28px;
+    top: 86px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 30px;
+    line-height: 35px;
+    color: #0D78BE;
+}
+
+.nav-container {
+    background-color: #ffffff;
+    width: 299px;
+    height: 727px;
+    float: left;
+    border-right: 1px solid rgba(0, 0, 0, 0.8);
+}
+
+.line {
+    position: absolute;
+    width: 269px;
+    height: 40px;
+    left: 275px;
+    top: 140px;
+}
+
+.help-button {
+    position: absolute;
+    width: 269px;
+    height: 40px;
+    left: 280px;
+    top: 140px;
+}
+
+.help-button-out {
+    position: absolute;
+    left: 13px;
+    top: 7px;
+}
+
+#help-link {
+    position: absolute;
+    left: 50px;
+    top: 10px;
+}
+
+.search-frame {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 0px;
+    position: absolute;
+    width: 269px;
+    height: 40px;
+    left: 21px;
+    top: 140px;
+}
+
+.search-box {
+    /* searchBox */
+    position: static;
+    width: 181px;
+    height: 40px;
+    left: 0px;
+    top: 0px;
+    padding-left: 8px;
+    border: 1px solid #F5F5F5;
+    box-sizing: border-box;
+    border-radius: 40px;
+    /* Inside Auto Layout */
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    margin: 0px 0px;
+}
+
+.search-btn {
+    position: relative;
+    top: 8px;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    left: 229px;
+    top: 0px;
+    background: #FFFFFF;
+    border: 1px solid #FFFFFF;
+    box-sizing: border-box;
+    border-radius: 40px;
+    /* Inside Auto Layout */
+    flex: none;
+    order: 2;
+    flex-grow: 0;
+    margin: 0px 24px;
+}
+
+.toyface {
+    /* ToyFaces.png */
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    left: 205px;
+    top: 0px;
+    border: 1px solid #F5F5F5;
+    box-sizing: border-box;
+    border-radius: 40px;
+}
+
+a {
+    /* remove the underline from nav elements*/
+    text-decoration: none;
+}
+
+.Dashboard-frame {
+    /* menu-button/select */
+    /* Auto Layout */
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 8px 12px;
+    position: absolute;
+    width: 164px;
+    height: 41px;
+    left: 29px;
+    top: 207px;
+    background: #FFFFFF;
+    border-radius: 50px;
+}
+
+.text_focus {
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 25px;
+    /* identical to box height */
+    color: #000000;
+    /* Inside Auto Layout */
+    flex: none;
+    order: 1;
+    align-self: center;
+    flex-grow: 0;
+    margin: 0px 16px;
+}
+
+.text_normal {
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 25px;
+    /* identical to box height */
+    color: #000000;
+    /* Inside Auto Layout */
+    flex: none;
+    order: 1;
+    align-self: center;
+    flex-grow: 0;
+    margin: 0px 16px;
+}
+
+.HC-frame {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 8px 12px;
+    position: absolute;
+    width: 164px;
+    height: 41px;
+    left: 29px;
+    top: 265px;
+    background: #0d78be59;
+    border-radius: 50px;
+}
+
+.Documents-frame {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 8px 12px;
+    position: absolute;
+    width: 164px;
+    height: 41px;
+    left: 29px;
+    top: 322px;
+    background: #FFFFFF;
+    border-radius: 50px;
+}
+
+.Settings-frame {
+    /* menu-button/normal */
+    /* Auto Layout */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 8px 12px;
+    position: absolute;
+    width: 164px;
+    height: 41px;
+    left: 29px;
+    top: 379px;
+    background: #FFFFFF;
+    border-radius: 50px;
+}
+
+.Logout-frame {
+    /* menu-button/normal */
+    /* Auto Layout */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 8px 12px;
+    position: absolute;
+    width: 164px;
+    height: 41px;
+    left: 29px;
+    top: 437px;
+    background: #FFFFFF;
+    border-radius: 50px;
+}
+
+.top-nav {
+    /* Top Nav */
+    position: absolute;
+    width: 682px;
+    height: 98px;
+    left: 947px;
+    top: 62px;
+}
+
+.greeting {
+    /* #distributions */
+    position: absolute;
+    width: 710px;
+    height: 23px;
+    left: 13px;
+    top: 37px;
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 48px;
+    line-height: 65px;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.historical {
+    position: absolute;
+    height: 584px;
+    left: 318px;
+    right: 18px;
+    top: 409px;
+}
+
+.additional-info {
+    position: absolute;
+    width: 342px;
+    height: 546px;
+    right: 0px;
+    top: 0px;
+}
+
+input {
+    position: relative;
+    margin-top: 0px;
+    margin-bottom: 5px;
+    border: None;
+    width: 117px;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 406px;
+    height: 68px;
+    bottom: 120px;
+    left: 90px;
+}
+
+.distribution {
+    color: #000000;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 25%;
+    font-size: 18px;
+}
+
+.time_series {
+    color: #000000;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 75%;
+    font-size: 18px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.filter {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #F2F2F2;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.filter:before {
+    position: absolute;
+    content: "";
+    height: 60px;
+    width: 198px;
+    left: 5px;
+    bottom: 5px;
+    background-color: #F0871D;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked+.filter {
+    background-color: #F2F2F2;
+}
+
+input:focus+.filter {
+    box-shadow: 0 0 1px #F0871D;
+}
+
+input:checked+.filter:before {
+    -webkit-transform: translateX(198px);
+    -ms-transform: translateX(198px);
+    transform: translateX(198px);
+}
+
+
+/* Rounded sliders */
+
+.filter {
+    border-radius: 15px;
+}
+
+.filter:before {
+    border-radius: 15px;
+}
