@@ -1,3 +1,4 @@
+/* set the basic styles of the doc */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -8,11 +9,13 @@ body{
     background: #FFFFFF;
 }
 
+/* set properties of the top-container */
 .top-container{
     height: 89px;
     float: top;
 }
 
+/* set properties of the navigation container */
 .nav-container{
     background-color: #ffffff;
     width: 299px;
@@ -21,6 +24,7 @@ body{
     border-right: 1px solid rgba(0, 0, 0, 0.8);
 }
 
+/* set properties of the Minerva Grades logo */
 .logo{
     position: absolute;
     left: 28px;
@@ -35,11 +39,13 @@ body{
     color: #0D78BE;
 }
 
+/* set properties of the search button */
 .search-btn {
     position: relative;
     top: 8px;
 }
 
+/* set properties of the search frame */
 .search-frame {
     display: flex;
     flex-direction: row;
@@ -54,10 +60,8 @@ body{
 
 }
 
+/* set properties of the search box */
 .search-box {
-    /* searchBox */
-
-
     position: static;
     width: 181px;
     height: 40px;
@@ -77,6 +81,7 @@ body{
     margin: 0px 0px;
 }
 
+/* set properties of the avatar frame */
 .avatar {
 
     width: 40px;
@@ -97,6 +102,7 @@ body{
     margin: 0px 24px;
 }
 
+/* set properties of the face image */
 .toyface {
     /* ToyFaces_Colored_BG_8 1 */
     width: 40px;
@@ -106,6 +112,7 @@ body{
 
 }
 
+/* set properties of the dashboard frame */
 .Dashboard-frame {
     /* menu-button/select */
 
@@ -128,6 +135,7 @@ body{
 
 }
 
+
 .text_focus {
     font-family: Open Sans;
     font-style: normal;
@@ -147,10 +155,12 @@ body{
     margin: 0px 16px;
 }
 
+/* set properties of the hyperlink text */
 a{
     text-decoration: none;
 }
 
+/* set properties of each item in the navigation bar */
 .nav-item {
     top: 400px;
     height: 500px;
@@ -210,6 +220,7 @@ a{
     border-radius: 50px;
 }
 
+
 .Settings-frame {
     /* menu-button/normal */
 
@@ -230,6 +241,7 @@ a{
     background: #FFFFFF;
     border-radius: 50px;
 }
+
 
 .Logout-frame {
     /* menu-button/normal */
@@ -256,7 +268,6 @@ a{
 .top-nav {
     /* Top Nav */
 
-
     position: absolute;
     width: 682px;
     height: 98px;
@@ -268,7 +279,6 @@ a{
 
 .greeting {
     /* Hi User! Welcome! */
-
 
     position: absolute;
     width: 710px;
@@ -293,6 +303,7 @@ a{
     top: 409px;
 }
 
+/* set properties of the additional info box*/
 .additional-info {
     position: absolute;
     width: 342px;
@@ -301,6 +312,7 @@ a{
     top: 0px;
 }
 
+/* set properties of the general input*/
 input {
     position: relative;
     margin-top:0px;
