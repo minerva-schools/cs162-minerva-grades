@@ -185,7 +185,7 @@ a{
     margin: 0px 16px;
 }
 
-
+/* set properties of the HC frame */
 .HC-frame {
 
     display: flex;
@@ -203,6 +203,7 @@ a{
     border-radius: 50px;
 }
 
+/* set properties of the documents frame */
 .Documents-frame {
 
     display: flex;
@@ -220,7 +221,7 @@ a{
     border-radius: 50px;
 }
 
-
+/* set properties of the settings frame */
 .Settings-frame {
     /* menu-button/normal */
 
@@ -242,7 +243,7 @@ a{
     border-radius: 50px;
 }
 
-
+/* set properties of the logout frame */
 .Logout-frame {
     /* menu-button/normal */
 
@@ -264,10 +265,8 @@ a{
     border-radius: 50px;
 }
 
-
+/* Top Nav */
 .top-nav {
-    /* Top Nav */
-
     position: absolute;
     width: 682px;
     height: 98px;
@@ -276,10 +275,8 @@ a{
 
 }
 
-
+/* Hi User! Welcome! */
 .greeting {
-    /* Hi User! Welcome! */
-
     position: absolute;
     width: 710px;
     height: 23px;
