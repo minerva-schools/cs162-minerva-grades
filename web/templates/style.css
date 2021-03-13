@@ -1,319 +1,196 @@
-/* set the basic styles of the doc */
-* {
-    box-sizing: border-box;
-    margin: 0;
+/* Minerva Grades */
+.title {
+  position: absolute;
+  width: 213px;
+  height: 35px;
+  left: 57px;
+  top: 86px;
+
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 30px;
+  line-height: 35px;
+
+  color: #000000;
+  white-space: nowrap;
 }
 
-body{
-    font-family: "Roboto", sans-serif;
-    background: #FFFFFF;
+/* A Dashboard Tool For Minerva Students to Understand Their Grades! */
+.big-intro {
+  position: absolute;
+  width: 507px;
+  height: 147px;
+  left: 57px;
+  top: 230px;
+
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 36px;
+  line-height: 49px;
+
+  color: #000000;
 }
 
-/* set properties of the top-container */
-.top-container{
-    height: 89px;
-    float: top;
+/* Welcome back! Please enter your session ID. */
+.small-intro {
+  position: absolute;
+  width: 362px;
+  height: 21px;
+  left: 57px;
+  top: 391px;
+
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 21px;
+  /* identical to box height */
+
+  color: rgba(0, 0, 0, 0.6);
+
+  white-space: nowrap;
 }
 
-/* set properties of the navigation container */
-.nav-container{
-    background-color: #ffffff;
-    width: 299px;
-    height: 727px;
-    float: left;
-    border-right: 1px solid rgba(0, 0, 0, 0.8);
+.sessionid-container {
+  /* format sessionid input box */
+  position: absolute;
+  width: 607px;
+  height: 74px;
+  left: 57px;
+  top: 480px;
+
+  background: #ffffff;
+  border: 1px solid #000000;
+  box-sizing: border-box;
 }
 
-/* set properties of the Minerva Grades logo */
-.logo{
-    position: absolute;
-    left: 28px;
-    top: 86px;
+/* How to Find Your Session ID */
+.sessionid-container a {
+  position: absolute;
+  width: 226px;
+  height: 21px;
+  left: 368px;
+  top: 90px;
 
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 30px;
-    line-height: 35px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 21px;
+  /* identical to box height */
 
-    color: #0D78BE;
+  text-decoration-line: underline;
+
+  color: rgba(0, 0, 0, 0.61);
+
+  white-space: nowrap;
 }
 
-/* set properties of the search button */
-.search-btn {
-    position: relative;
-    top: 8px;
+form {
+  /* center the form */
+  margin: 0 auto;
+  width: 300px;
+  padding: 1em;
 }
 
-/* set properties of the search frame */
-.search-frame {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    padding: 0px;
+input[type="submit"] {
+  /* format the sessionid submit button */
+  position: absolute;
+  width: 129px;
+  height: 54px;
+  left: 0px;
+  top: 178px;
 
-    position: absolute;
-    width: 269px;
-    height: 40px;
-    left: 21px;
-    top: 140px;
+  font-size: 14px;
+  border: none;
+  outline: none;
 
+  background: #000000;
+  box-shadow: 0px 4px 3px rgba(0, 0, 0, 0.25);
+
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 21px;
+  color: #ffffff;
 }
 
-/* set properties of the search box */
-.search-box {
-    position: static;
-    width: 181px;
-    height: 40px;
-    left: 0px;
-    top: 0px;
-    padding-left: 8px;
+.img {
+  /* format the image */
+  position: absolute;
+  left: 49.65%;
+  right: 4.78%;
+  top: 20.61%;
+  bottom: 13.64%;
+  vertical-align: middle;
 
-    border: 1px solid #F5F5F5;
-    box-sizing: border-box;
-    border-radius: 40px;
-
-    /* Inside Auto Layout */
-
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-    margin: 0px 0px;
+  /* The z-index property specifies the stack order of an element. */
+  z-index: -1;
 }
 
-/* set properties of the avatar frame */
-.avatar {
+.right {
+  /* Right 6 */
+  position: absolute;
+  width: auto;
+  height: 723px;
+  left: 690px;
+  top: 0px;
 
-    width: 40px;
-    height: 40px;
-    left: 229px;
-    top: 0px;
-
-    background: #FFFFFF;
-    border: 1px solid #F5F5F5;
-    box-sizing: border-box;
-    border-radius: 40px;
-
-    /* Inside Auto Layout */
-
-    flex: none;
-    order: 2;
-    flex-grow: 0;
-    margin: 0px 24px;
+  background: #f0871d;
+  z-index: -1;
 }
 
-/* set properties of the face image */
-.toyface {
-    /* ToyFaces_Colored_BG_8 1 */
-    width: 40px;
-    height: 40px;
-    left: 0px;
-    top: 0px;
+.topnav #Home {
+  /* Home */
+  position: absolute;
+  width: 65px;
+  height: 28px;
+  left: 60px;
+  top: 50px;
 
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 22px;
+  line-height: 28px;
+
+  color: #000000;
 }
 
-/* set properties of the dashboard frame */
-.Dashboard-frame {
-    /* menu-button/select */
+.topnav #About {
+  /* About */
+  position: absolute;
+  width: 65px;
+  height: 28px;
+  left: 140px;
+  top: 50px;
 
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 22px;
+  line-height: 28px;
 
-    /* Auto Layout */
-
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    padding: 8px 12px;
-
-    position: absolute;
-    width: 164px;
-    height: 41px;
-    left: 29px;
-    top: 207px;
-
-    background: rgba(13, 120, 190, 0.35);
-    border-radius: 50px;
-
+  color: #000000;
+  white-space: nowrap;
 }
 
+.topnav #Contact {
+  /* Contact */
+  position: absolute;
+  width: 65px;
+  height: 28px;
+  left: 255px;
+  top: 50px;
 
-.text_focus {
-    font-family: Open Sans;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 18px;
-    line-height: 25px;
-    /* identical to box height */
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 22px;
+  line-height: 28px;
 
-    color: #000000;
-
-
-    /* Inside Auto Layout */
-    flex: none;
-    order: 1;
-    align-self: center;
-    flex-grow: 0;
-    margin: 0px 16px;
-}
-
-/* set properties of the hyperlink text */
-a{
-    text-decoration: none;
-}
-
-/* set properties of each item in the navigation bar */
-.nav-item {
-    top: 400px;
-    height: 500px;
-}
-
-.text_normal {
-    font-family: Open Sans;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 18px;
-    line-height: 25px;
-    /* identical to box height */
-
-    color: #000000;
-
-
-    /* Inside Auto Layout */
-    flex: none;
-    order: 1;
-    align-self: center;
-    flex-grow: 0;
-    margin: 0px 16px;
-}
-
-/* set properties of the HC frame */
-.HC-frame {
-
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 8px 12px;
-
-    position: absolute;
-    width: 98px;
-    height: 41px;
-    left: 29px;
-    top: 265px;
-
-    background: #FFFFFF;
-    border-radius: 50px;
-}
-
-/* set properties of the documents frame */
-.Documents-frame {
-
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 8px 12px;
-
-    position: absolute;
-    width: 132px;
-    height: 41px;
-    left: 29px;
-    top: 322px;
-
-    background: #FFFFFF;
-    border-radius: 50px;
-}
-
-/* set properties of the settings frame */
-.Settings-frame {
-    /* menu-button/normal */
-
-
-    /* Auto Layout */
-
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 8px 12px;
-
-    position: absolute;
-    width: 131px;
-    height: 41px;
-    left: 29px;
-    top: 379px;
-
-    background: #FFFFFF;
-    border-radius: 50px;
-}
-
-/* set properties of the logout frame */
-.Logout-frame {
-    /* menu-button/normal */
-
-
-    /* Auto Layout */
-
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 8px 12px;
-
-    position: absolute;
-    width: 131px;
-    height: 41px;
-    left: 29px;
-    top: 437px;
-
-    background: #FFFFFF;
-    border-radius: 50px;
-}
-
-/* Top Nav */
-.top-nav {
-    position: absolute;
-    width: 682px;
-    height: 98px;
-    left: 947px;
-    top: 62px;
-
-}
-
-/* Hi User! Welcome! */
-.greeting {
-    position: absolute;
-    width: 710px;
-    height: 23px;
-    left: 13px;
-    top: 37px;
-
-    font-family: Open Sans;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 48px;
-    line-height: 65px;
-
-    color: rgba(0, 0, 0, 0.5);
-}
-
-.historical {
-    position: absolute;
-    height: 584px;
-    left: 318px;
-    right: 18px;
-    top: 409px;
-}
-
-/* set properties of the additional info box*/
-.additional-info {
-    position: absolute;
-    width: 342px;
-    height: 546px;
-    right: 0px;
-    top: 0px;
-}
-
-/* set properties of the general input*/
-input {
-    position: relative;
-    margin-top:0px;
-    margin-bottom: 5px;
-    border: None;
-    width: 117px;
+  color: #000000;
 }
