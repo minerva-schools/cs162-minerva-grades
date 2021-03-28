@@ -1,18 +1,12 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-import os
 
 app = Flask(__name__)
-
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
-
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(200))
 
 
 class Lo(db.Model):
@@ -27,8 +21,8 @@ class Lo(db.Model):
     co_id = db.Column(db.Integer)  # ID of associated Course Outcome
     co_desc = db.Column(db.String(500))  # Description of associated Course Outcome
     course = db.Column(db.String(10))  # Short Course name. Example: CS162
-    mean = db.Column(db.Numeric(precision=2))  # Mean of HC score
-
+    mean = db.Column(db.String(4))  # Mean of HC score
+    # mean would ideally be a numeric but sqlite does not support numerics
 
 class LoGrade(db.Model):
     __tablename__ = "lo_grades"
@@ -59,7 +53,8 @@ class Hc(db.Model):
     name = db.Column(db.String(40))  # Short HC name. Example: #powerdynamics
     description = db.Column(db.String(500))  # Longer HC description
     course = db.Column(db.String(10))  # Short Course name. Example: EA
-    mean = db.Column(db.Numeric(precision=2))  # Mean of HC score
+    mean = db.Column(db.String(4))  # Mean of HC score.
+    # mean would ideally be a numeric but sqlite does not support numerics
 
 
 class HcGrade(db.Model):
