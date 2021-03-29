@@ -46,19 +46,38 @@ class HcFetcher(GradeFetcher):
                     new_hc = Hc(hc_id=hc["id"], user_id=self._cookie["sessionid"], name=hc["name"],
                                 description=hc["description"], course=hc["cornerstone-code"], mean=hc_means[hc["id"]])
                     db.session.add(new_hc)
+        self.db_commit()
         with concurrent.futures.ThreadPoolExecutor(max_workers=20) as pool:
-            pool.map(self.get_grade, urls)
-        return self.db_commit()
+            for grade in pool.map(self.get_grade, urls):
+                if grade is not None:
+                    db.session.add(grade)
+        self.db_commit()
 
     def get_grade(self, hc_id):
         grades_data = self.get_url("outcomeindex/performance?hc-item=" + str(hc_id))
         for grade in grades_data:
             time = dateutil.parser.parse(grade["created-on"])
+            transferred = self.is_transferred(grade["hc-item"], grade)
             new_grade = HcGrade(grade_id=grade["id"], hc_id=hc_id, user_id=self._cookie["sessionid"],
                                 score=grade["score"], weight=grade["weight"], time=time,
-                                assignment=(grade["type"] == "assignment"), transfer=None)
-            db.session.add(new_grade)
-        return self.db_commit()
+                                assignment=(grade["type"] == "assignment"), transfer=transferred)
+            return new_grade
+
+    def is_transferred(self, hc_id, grade):
+
+        if grade["type"] == "assignment":
+            assignment = self.get_url("assignments/{}/nested_for_detail_page".format(
+                grade["assignment-id"]))
+            foregrounded = [focused_hc.get("hc-item").get("id") for focused_hc in assignment.get("focused-outcomes", [])
+                            if focused_hc.get("hc-item") is not None]
+            return hc_id not in foregrounded
+        else:
+            grade_class = self.get_url("classes/{}/class_edit_page".format(
+                grade["klass-id"]))
+            foregrounded = [focused_hc.get("hc-item").get("id") for focused_hc in
+                            grade_class["assessment"].get("focused-outcomes", [])
+                            if focused_hc.get("hc-item") is not None]
+            return hc_id not in foregrounded
 
 
 class LoFetcher(GradeFetcher):
@@ -86,9 +105,12 @@ class LoFetcher(GradeFetcher):
                                     description=lo["description"], term=term, co_id=co["id"], co_desc=co["description"],
                                     course=course["course"]["course-code"], mean=lo_means[lo["id"]])
                         db.session.add(new_lo)
+        self.db_commit()
         with concurrent.futures.ThreadPoolExecutor(max_workers=20) as pool:
-            pool.map(self.get_grade, urls)
-        return self.db_commit()
+            for grade in pool.map(self.get_grade, urls):
+                if grade is not None:
+                    db.session.add(grade)
+        self.db_commit()
 
     def get_grade(self, lo_id):
         grades_data = self.get_url("outcomeindex/performance?learning-outcome=" + str(lo_id))
@@ -97,5 +119,4 @@ class LoFetcher(GradeFetcher):
             new_grade = LoGrade(grade_id=grade["id"], lo_id=lo_id, user_id=self._cookie["sessionid"],
                                 score=grade["score"], weight=grade["weight"], time=time,
                                 assignment=(grade["type"] == "assignment"))
-            db.session.add(new_grade)
-        return self.db_commit()
+            return new_grade
