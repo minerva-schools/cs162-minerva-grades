@@ -1,8 +1,17 @@
 from datetime import datetime
-from dashboard import db
+from dashboard import db, login_manager
+from flask_login import UserMixin
 
 
-class Lo(db.Model):
+@login_manager.user_loader
+def load_user(user_id):
+    return Lo.query.get(user_id)
+
+
+class Lo(db.Model, UserMixin):
+    def get_id(self):
+        return (self.user_id)
+        
     __tablename__ = "los"
     __table_args__ = {'extend_existing': True}  # Makes sure database is updated and we don't get errors on restart
 
