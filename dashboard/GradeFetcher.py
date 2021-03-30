@@ -1,5 +1,6 @@
 import requests
-from web.serve import db, Hc, HcGrade, Lo, LoGrade
+from dashboard.models import Lo, LoGrade, Hc, HcGrade
+from dashboard import db
 import dateutil.parser
 import concurrent.futures
 

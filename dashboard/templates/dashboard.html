@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Minerva Grades</title>
+    <link rel = "stylesheet" href = "../static/dashboard_style.css">
+</head>
+<body>
+    <!-- set the top blank space -->
+    <div class = 'top-container'>
+
+    </div>
+
+    <!-- set a container for the left bar -->
+    <div class = 'nav-container'>
+        <div class = "logo">
+            Minerva Grades
+        </div>
+
+        <!-- set a container for the search frame -->
+        <div class = "search-frame">
+            <div class = "search-box">
+                <img class = "search-btn" src="images/search.svg" alt="search button">
+                <input type="text" placeholder="Search Everything">
+            </div>
+
+            <div class = "avatar">
+                <img src="images/line2.svg" alt="line_2">
+                <img class = "toyface" src="images/ToyFaces.png" alt="avatar-face">
+            </div>
+        </div>
+
+        <!-- set a container for all navigation items -->
+        <nav class = "nav-items">
+            <ul>
+                <li class = 'Dashboard-frame'>
+                    <img src="images/home-select.svg" alt="dashboard-icon">
+                    <a href="#" class = 'text_focus'>Dashboard</a>
+                </li>
+                <li class = 'HC-frame'>
+                    <img src="images/chart.svg" alt="HC-icon">
+                    <a href="#" class = 'text_normal'>HCs</a>
+                </li>
+                <li class = 'Documents-frame'>
+                    <img src="images/documents.svg" alt="Courses-icon">
+                    <a href="#" class = 'text_normal'>Courses</a>
+                </li>
+                <li class = 'Settings-frame'>
+                    <img src="images/settings.svg" alt="Settings-icon">
+                    <a href="#" class = 'text_normal'>Settings</a>
+                </li>
+                <li class = 'Logout-frame'>
+                    <img src="images/logout.svg" alt="logout-icon">
+                    <a href="#" class = 'text_normal'>Log Out</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- set the dividing line between the left and right parts -->
+    <div class = "Line1">
+    </div>
+
+    <!-- set a container for the middle right help section -->
+    <div class = "help-button">
+        <img class = "help-button-out" src="images/_.svg" alt="help-button-out">
+        <img class = "help-button-in" src="images/Ellipse1.svg" alt="help-button-in">
+        <a href="#">Help</a>
+    </div>
+
+    <!-- set a container for the top left greetings -->
+    <div class = "top-nav">
+        <p class = 'greeting'>
+            Hi User! Welcome!
+        </p>
+    </div>
+    <div class = "summary_stats">
+        <div class="Card">
+        </div>
+    </div>
+
+    <!-- set a container for the entire dashboard section -->
+    <!-- todo: replace the placeholder data viz image with real code -->
+    <div class = "historical">
+        <!-- set a container for the data visualization section -->
+        <div class = "main-graph">
+            <div class = "graph-header">
+                <div class = "estimated-GPA">
+                    <div class = "estimated-GPA-top">
+                        3.5
+                    </div>
+                    <div class = "estimated-GPA-bottom">
+                        <div>
+                            Estimated GAP
+                        </div>
+                        <div class = "trend">
+
+                        </div>
+                    </div>
+                </div>
+                <div class = Transfer-HCs">
+                    Transfer HCs
+                </div>
+            </div>
+            <div class = "viz">
+                <img class = "dataviz" src="images/fullgraph.png" alt="dataviz">
+            </div>
+        </div>
+        
+        <!-- set a container for explanatory information on the right -->
+        <div class = "additional-info">
+            <div>
+                HCs To Apply
+                <a href="#">#distributions</a>
+            </div>
+            <div>Strong HC</div>
+            <div>Course1 - LO to Apply</div>
+            <div>Course2 - LO to Apply</div>
+            <div>Course3 - LO to Apply</div>
+        </div>
+    </div>
+</body>
+</html>

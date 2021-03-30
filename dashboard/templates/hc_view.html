@@ -1,0 +1,104 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Minerva Grades</title>
+
+    <link rel="stylesheet" href="hc_view.css">
+</head>
+
+<body>
+
+    <!-- Section containing sidebar view-->
+    <div class='top-container'>
+        <div class='wrapper'>
+            <!-- Section the logo/title of website-->
+            <div class="logo">
+                Minerva Grades
+            </div>
+            <!-- Section for search section-->
+            <div class="search-frame">
+                <div class="search-box">
+                    <img class="search-btn" src="images/search.svg" alt="search button">
+                    <input type="text" placeholder="Search Everything">
+                </div>
+                <!-- Section for avatar-->
+                <div class="avatar">
+                    <img class="toyface" src="images/ToyFaces.png" alt="avatar-face">
+                </div>
+            </div>
+
+            <nav class="nav-items">
+                <!-- Sidebar Navigation display setup-->
+                <ul>
+                    <li class='Dashboard-frame'>
+                        <img src="images/home-select.svg" alt="dashboard-icon">
+                        <a href="#" class='text_focus'>Dashboard</a>
+                    </li>
+                    <li class='HC-frame'>
+                        <img src="images/chart.svg" alt="HC-icon">
+                        <a href="#" class='text_normal'>HCs</a>
+                    </li>
+                    <li class='Documents-frame'>
+                        <img src="images/documents.svg" alt="Courses-icon">
+                        <a href="#" class='text_normal'>Courses</a>
+                    </li>
+                    <li class='Settings-frame'>
+                        <img src="images/settings.svg" alt="Settings-icon">
+                        <a href="#" class='text_normal'>Settings</a>
+                    </li>
+                    <li class='Logout-frame'>
+                        <img src="images/logout.svg" alt="logout-icon">
+                        <a href="#" class='text_normal'>Log Out</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <div class="line">
+        <img src="images/Line2.svg" alt="vectical divisor">
+    </div>
+
+    <div class="help-button">
+        <img class="help-button-out" src="images/_.svg" alt="help-button-out">
+        <img class="help-button-in" src="images/Ellipse1.svg" alt="help-button-in">
+        <a id="help-link" href="#">Help</a>
+    </div>
+
+    <div class="top-nav">
+        <!--The greeting will depend on the selected HC, so we will replace this functionality once the data part is ready-->
+        <p class='greeting'>
+            #distributions
+        </p>
+    </div>
+
+    <!-- Section for the entire graph information display -->
+    <div class="historical">
+        <!-- Section for the graph display -->
+        <div class="main-graph">
+            <!-- Section for the graph header-->
+            <div class="graph-header">
+            </div>
+            <!-- Round switch between graph views -->
+            <label class="switch">
+                <input type="checkbox" id = "togBtn">
+                <!-- Section for switch texts -->
+                <div class="filter">
+                    <span class="distribution">Distribution</span>
+                    <span class="time_series">Time Series</span>
+                </div>
+            </label>
+            <!-- Graph & filter view using placeholder for now -->
+            <div class="tabular_viz">
+                <img class="tabular_dataviz " src="images_hc_page/Historical.png " alt="dataviz ">
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+</html>
