@@ -1,0 +1,78 @@
+{% from "macros.html" import nav_link with context %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>{% block title%}Default title{% endblock title %}</title>
+    <!-- Add any needed scripts needed for each page -->
+    {% block head_scripts %} {% endblock %}
+    <!-- Add the appropriate CSS file to each page if needed-->
+    {% block css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"> {% endblock %}
+</head>
+
+<body>
+    {% block body %}
+    <!-- set the top blank space -->
+    <div class='top-container'>
+
+    </div>
+    <!-- Section containing sidebar view-->
+    <div class="nav-container">
+        <div class='wrapper'>
+            <!-- Section the logo/title of website-->
+            <div class="logo">
+                Minerva Grades
+            </div>
+            <!-- Section for search section-->
+            <div class="search-frame">
+                <div class="search-box">
+                    <!-- TODO: Need to figure out how search bar will be used to update its functionality-->
+                    <img class="search-btn" src="{{ url_for('static', filename='images/search.svg') }}" alt="search button">
+                    <input type="text" placeholder="Search Anything">
+                </div>
+                <!-- Section for avatar-->
+                <!-- TODO: Need to figure out if the profile photo from Forum will be fetch or will we use same photo for everyone?-->
+                <div class="avatar">
+                    <img class="toyface" src="{{ url_for('static', filename='images/ToyFaces.png') }}" alt="avatar-face">
+                </div>
+            </div>
+        </div>
+        <!-- set a container for all navigation items -->
+        <div class="nav-item">
+            <ul>
+                {{ nav_link( "dashboard", "Dashboard", "home-select.svg") }} {{ nav_link( "hcs", "HCs","chart.svg") }} {{ nav_link( "courses", "Courses","documents.svg") }} {{ nav_link( "settings", "Settings", "settings.svg") }} {{ nav_link( "logout", "Logout", "logout.svg")
+                }}
+            </ul>
+        </div>
+    </div>
+
+    <!-- set the dividing line between the left and right parts -->
+    <div class="Line1">
+    </div>
+
+    <!-- set a container for the middle right help section -->
+    <div class="help-button">
+        <img class="help-button-out" src="{{ url_for('static', filename='images/_.svg') }}" alt="help-button-out">
+        <img class="help-button-in" src="{{ url_for('static', filename='images/Ellipse1.svg') }}" alt="help-button-in">
+        <!--TODO: will we have another Help page? Or will it be just modal dialog (pop-up info)? -->
+        <a id="help-link" href="#">Help</a>
+    </div>
+    {% endblock %}
+    <!-- Additional personalized content place for each page-->
+    {% block content %}
+    <!-- set a container for the top left greetings -->
+    <div class="top-nav">
+        <p class='greeting'> {% block greeting %} {% endblock%} </p>
+    </div>
+    <!-- set a container for the entire dataviz section -->
+    <div class="historical">
+        {% block dataviz%}{%endblock%}
+    </div>
+    <!-- set a container for explanatory information on the right -->
+    <div class="additional-info">
+        {% block table_info%}{%endblock%}
+    </div>
+    {% endblock %}
+</body>

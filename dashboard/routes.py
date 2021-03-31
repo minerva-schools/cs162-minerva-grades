@@ -35,3 +35,22 @@ def login():
 @login_required
 def dashboard():
     return render_template('dashboard.html')
+
+@app.route("/hcs")
+@login_required
+def hcs():
+    return render_template('hcs.html')
+
+@app.route("/courses")
+@login_required
+def courses():
+    return render_template('courses.html')
+
+@app.route("/settings")
+@login_required
+def settings():
+    return render_template('settings.html')
+
+@app.route("/logout")
+def logout():
+    return render_template('index.html')
