@@ -1,0 +1,18 @@
+<!-- Navigation SideBar -->
+{% macro nav_link(endpoint, text, image) %} {% if request.endpoint.endswith(endpoint) %}
+<li class="active">
+    <img src="static/images/{{ image }}" alt="{{text}}-face">
+    <a class='text_focus' href="{{ url_for(endpoint) }}">{{ text }}</a>
+</li>
+{% else %}
+<li class="inactive">
+    <img src="static/images/{{ image }}" alt="{{text}}-face">
+    <a class='text_normal' href="{{ url_for(endpoint) }}">{{ text }}</a>
+</li>
+{% endif %} {% endmacro %}
+
+<!-- Potential other macros-->
+<!-- Display Filter Button -->
+<!-- Additonal Info Table -->
+<!-- Course selection dropdown -->
+<!-- Timeline selection dropdown -->
