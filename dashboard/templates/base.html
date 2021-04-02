@@ -9,7 +9,7 @@
     {% block head_scripts %} {% endblock %}
     <!-- Add the appropriate CSS file to each page if needed-->
     {% block css %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"> {% endblock %}
+    <link rel="stylesheet" href="../static/style.css"> {% endblock %}
 </head>
 
 <body>
@@ -29,13 +29,13 @@
             <div class="search-frame">
                 <div class="search-box">
                     <!-- TODO: Need to figure out how search bar will be used to update its functionality-->
-                    <img class="search-btn" src="{{ url_for('static', filename='images/search.svg') }}" alt="search button">
+                    <img class="search-btn" src="../static/images/search.svg" alt="search button">
                     <input type="text" placeholder="Search Anything">
                 </div>
                 <!-- Section for avatar-->
                 <!-- TODO: Need to figure out if the profile photo from Forum will be fetch or will we use same photo for everyone?-->
                 <div class="avatar">
-                    <img class="toyface" src="{{ url_for('static', filename='images/ToyFaces.png') }}" alt="avatar-face">
+                    <img class="toyface" src="../static/images/ToyFaces.png" alt="avatar-face">
                 </div>
             </div>
         </div>
@@ -54,8 +54,8 @@
 
     <!-- set a container for the middle right help section -->
     <div class="help-button">
-        <img class="help-button-out" src="{{ url_for('static', filename='images/_.svg') }}" alt="help-button-out">
-        <img class="help-button-in" src="{{ url_for('static', filename='images/Ellipse1.svg') }}" alt="help-button-in">
+        <img class="help-button-out" src="../static/images/_.svg" alt="help-button-out">
+        <img class="help-button-in" src="../static/images/Ellipse1.svg" alt="help-button-in">
         <!--TODO: will we have another Help page? Or will it be just modal dialog (pop-up info)? -->
         <a id="help-link" href="#">Help</a>
     </div>

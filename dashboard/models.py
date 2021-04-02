@@ -16,7 +16,7 @@ class Lo(db.Model, UserMixin):
     __table_args__ = {'extend_existing': True}  # Makes sure database is updated and we don't get errors on restart
 
     lo_id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.String(40))
     name = db.Column(db.String(40))  # Short LO name. Example: #linearsystems
     description = db.Column(db.String(500))  # Longer LO description
     term = db.Column(db.Integer)  # Integer indicating the term. For example, 22 means Spring 2021

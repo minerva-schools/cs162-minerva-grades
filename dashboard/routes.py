@@ -14,14 +14,14 @@ def home():
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
-   # if current_user.is_authenticated:
-   #   return redirect(url_for('dashboard'))
+    if current_user.is_authenticated:
+      return redirect(url_for('dashboard'))
     form = LoginForm()      
     if form.validate_on_submit():
       fetcher = LoFetcher(form.sessionID.data)
       fetcher.get_grades()
 
-      user = Lo.query.filter_by(user_id =form.sessionID.data).first()
+      user = Lo.query.filter_by(user_id = form.sessionID.data).first()
       if user:
           login_user(user)
           flash(f'Hi {user.user_id}, you have been logged in.', 'success')
@@ -32,22 +32,22 @@ def login():
 
 
 @app.route("/dashboard")
-@login_required
+#@login_required
 def dashboard():
     return render_template('dashboard.html')
 
 @app.route("/hcs")
-@login_required
+#@login_required
 def hcs():
     return render_template('hcs.html')
 
 @app.route("/courses")
-@login_required
+#@login_required
 def courses():
     return render_template('courses.html')
 
 @app.route("/settings")
-@login_required
+#@login_required
 def settings():
     return render_template('settings.html')
 
