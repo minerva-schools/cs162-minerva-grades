@@ -8,10 +8,7 @@ def load_user(user_id):
     return Lo.query.get(user_id)
 
 
-class Lo(db.Model, UserMixin):
-    def get_id(self):
-        return (self.user_id)
-        
+class Lo(db.Model):
     __tablename__ = "los"
     __table_args__ = {'extend_existing': True}  # Makes sure database is updated and we don't get errors on restart
 
@@ -79,12 +76,8 @@ class HcGrade(db.Model):
 
 Hc.grades = db.relationship("HcGrade", foreign_keys=[HcGrade.hc_id, HcGrade.user_id], back_populates="hc")
 
-
 db.create_all()
-example_grade = Lo(lo_id=1, user_id=1, name="#test", description="test stuff", term=22, co_id=1,
-                   co_desc="hello", course="test", mean=3)  # Make sure to delete before moving to production
-db.session.merge(example_grade)
-db.session.commit()
+
 
 
 
