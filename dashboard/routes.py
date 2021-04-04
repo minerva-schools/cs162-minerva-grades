@@ -7,11 +7,7 @@ from flask import render_template, url_for, flash, redirect, request, abort
 from flask_login import login_user, current_user, logout_user, login_required
 
 
-
-@app.route("/")
-def home():
-    return render_template('index.html')
-
+@app.route("/", methods=['GET', 'POST'])
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
@@ -62,4 +58,5 @@ def settings():
 
 @app.route("/logout")
 def logout():
-    return render_template('index.html')
+    form = LoginForm()      
+    return render_template('login.html', title='Welcome', form=form)
