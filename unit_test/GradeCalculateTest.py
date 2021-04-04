@@ -7,23 +7,23 @@ class GradeCalculateTest(TestCase):
 
     def test_calculate_co_score(self, co_id):
         co_score = calculate_co_score(co_id)
-        self.assertEqual(co_score, #)
+        assert(co_score != 0)
     
     def test_calculate_course_score(self, course):
         course_score = calculate_course_score(course)
-        self.assertEqual(course_score, #)
+        assert(course_score != 0)
     
     def test_calculate_gpa(self):
         gpa = calculate_gpa()
-        self.assertEqual(gpa, #)
+        assert(gpa != 0)
     
     def test_least_frequent_Lo(self):
         least_freq_Lo = least_Lo()
-        self.assertEqual(least_freq_Lo, #)
+        assert(least_freq_Lo != 0)
     
     def least_frequent_Hc(self):
         least_freq_Lo = least_Hc()
-        self.assertEqual(least_frequent_Hc, #)
+        assert(least_frequent_Hc != 0)
 
 if __name__ == "__main__":
     unittest.main()
