@@ -3,6 +3,7 @@ from dashboard import db, login_manager
 from flask_login import UserMixin
 
 
+#login manager to identify user after login.
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(user_id)
@@ -85,10 +86,6 @@ Hc.grades = db.relationship("HcGrade", foreign_keys=[HcGrade.hc_id, HcGrade.user
 
 
 db.create_all()
-example_grade = Lo(lo_id=1, user_id=1, name="#test", description="test stuff", term=22, co_id=1,
-                   co_desc="hello", course="test", mean=3)  # Make sure to delete before moving to production
-db.session.merge(example_grade)
-db.session.commit()
 
 
 
