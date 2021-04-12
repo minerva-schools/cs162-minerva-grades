@@ -12,6 +12,14 @@ Werkzeug==0.15 # version 0.15 instead of v1 because of Flask login support. can 
 pytest==6.2.2
 requests~=2.25.1
 python-dateutil~=2.8.1
+
+#login libraries
 WTForms==2.1
 Flask-WTF==0.14.2
 Flask-Login==0.4.1
+
+#data handling
+pandas==1.2.3
+
+#data viz
+altair==4.1.0 

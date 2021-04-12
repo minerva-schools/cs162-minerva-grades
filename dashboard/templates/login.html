@@ -6,6 +6,10 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Minerva Grade - Dashboard</title>
 	
+	<!--Bootstrap Login Style-->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<!--Bootstrap Login Style-->
+
 	<link rel="stylesheet" type="text/css" href="../static/login_style.css">
 	<!--Custom Font-->
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
@@ -23,7 +27,6 @@
 		</div>
 
 		<div class="sessionid-container">
-
 			<form method="POST" action="">
 			<!--Flask Login Tag-->
 			{{ form.hidden_tag() }}
@@ -42,6 +45,7 @@
 								{{ form.sessionID(class="form-control form-control-lg") }}
 						{% endif %}
 					</div>
+					<a href="#">How to Find Your Session ID</a>
 				</fieldset>
 			
 				<div class="form-group" >
@@ -50,17 +54,21 @@
 			</form>
 		</div>
 
-		<!-- Replace HTML Login with Flask Login.
-		<div class="sessionid-container">
-			<form action="/action_page.php">
-				<label for="pwd">Session ID</label>
-				<input type="password" id="psw" name="psw">
-				<a href="#">How to Find Your Session ID</a>
-				<input type="submit" value="Log In">
-			</form>
-		</div>
-	</div>
-	[endif]-->
+		<div class="container">
+      <div class="col-md-8">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert alert-{{ category }}">
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+      </div>
+      
+      {% block content %}{% endblock %}
+    </div>
 
 
 	<div class="right">
