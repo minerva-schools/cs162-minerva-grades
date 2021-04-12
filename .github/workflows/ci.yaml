@@ -40,4 +40,4 @@ jobs:
       env:
         DATABASE_URL: 'sqlite:///:memory:'
         SECRET_KEY: 'e9cac0f3f4Yd47a3be91d7b8f5'
-        SESSION_ID: ${{ secrets.GITHUB_TOKEN }}
+        SESSION_ID: ${{ secrets.SESSION_ID }}

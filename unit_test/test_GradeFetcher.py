@@ -12,7 +12,6 @@ class FetcherTest(unittest.TestCase):
 
     def test_lo_fetch(self):
         """Test fetching LOs"""
-        print(session_id)
         fetcher = LoFetcher(session_id)
         fetcher.get_grades()
         # Test that database was filled
