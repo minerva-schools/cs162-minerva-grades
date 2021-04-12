@@ -1,6 +1,7 @@
 # Welcome to CS162 Final Project
 
 ## Run Virtual Environment
+If you use an IDE, it should create the virtual environment for you. Skip to 'Run Application'
 
 Virtual environment is a key component in ensuring that the application is configured in the right environment
 
@@ -21,6 +22,7 @@ $ pip3 install virtualenv
 ```
 
 ##### Usage
+
 Creation of virtualenv:
 
     $ virtualenv -p python3 venv
@@ -55,8 +57,6 @@ All environment variables are stored within the `.env` file and loaded with dote
 
 Start the server by running:
 
-    $ export FLASK_ENV=development
-    $ export FLASK_APP=web
     $ python3 -m flask run
 
 ## Unit Tests
@@ -65,7 +65,6 @@ To run the unit tests use the following commands:
     $ python3 -m venv venv_unit
     $ source venv_unit/bin/activate
     $ pip install -r requirements-unit.txt
-    $ export DATABASE_URL='sqlite:///web.db'
     $ pytest unit_test
 
 ## Integration Tests
