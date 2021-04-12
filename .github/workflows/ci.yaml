@@ -31,14 +31,15 @@ jobs:
         python3 -m flask run > /dev/null &
         while ! sudo lsof -Pi :5000 -sTCP:LISTEN -t; do sleep 1; done
       env:
-        DATABASE_URL: 'sqlite:///web.db'
+        DATABASE_URL: 'sqlite:///:memory:'
         SECRET_KEY: 'e9cac0f3f4Yd47a3be91d7b8f5'    
-        FLASK_APP: web
+        FLASK_APP: dashboard
         FLASK_RUN_PORT: 5000
     - name: Test with pytest
       run: |
         pytest unit_test
         pytest integration_test
       env:
-        DATABASE_URL: 'sqlite:///web.db'
-        SECRET_KEY: 'e9cac0f3f4Yd47a3be91d7b8f5'    
+        DATABASE_URL: 'sqlite:///:memory:'
+        SECRET_KEY: 'e9cac0f3f4Yd47a3be91d7b8f5'
+        SESSION_ID: ${{ secrets.GITHUB_TOKEN }}
