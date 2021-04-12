@@ -29,7 +29,7 @@ jobs:
     - name: Bring Server up
       run: |
         python3 -m flask run > /dev/null &
-        while ! sudo lsof -Pi :5000 -sTCP:LISTEN -t; do sleep 1; done
+#        while ! sudo lsof -Pi :5000 -sTCP:LISTEN -t; do sleep 1; done
       env:
         DATABASE_URL: 'sqlite:///:memory:'
         SECRET_KEY: 'e9cac0f3f4Yd47a3be91d7b8f5'    
