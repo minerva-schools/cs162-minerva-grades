@@ -8,6 +8,7 @@ from flask_login import UserMixin
 def load_user(user_id):
     return User.query.get(user_id)
 
+
 class User(db.Model, UserMixin):
     def get_id(self):
         return (self.user_id)
@@ -84,8 +85,8 @@ class HcGrade(db.Model):
 
 Hc.grades = db.relationship("HcGrade", foreign_keys=[HcGrade.hc_id, HcGrade.user_id], back_populates="hc")
 
-
 db.create_all()
+
 
 
 

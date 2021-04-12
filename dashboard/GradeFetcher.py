@@ -6,6 +6,7 @@ import concurrent.futures
 
 
 class GradeFetcher():
+    """Parent class that fetches grades from Forum"""
     def __init__(self, session):
         self._cookie = dict(sessionid=session)
         self.api_base = "https://forum.minerva.kgi.edu/api/v1/"
@@ -30,6 +31,7 @@ class HcFetcher(GradeFetcher):
         super().__init__(session)
 
     def get_grades(self):
+        """Gets all HC grades, including granular assignment and class scores"""
         # Get mean HC grades
         hc_means_raw = self.get_url("outcome-index-items?outcomeType=hc")
         # Transform into a dictionary for O(1) lookups
@@ -37,6 +39,8 @@ class HcFetcher(GradeFetcher):
         for hc in hc_means_raw:
             if "hc-item" in hc:
                 hc_means[hc["hc-item"]] = hc["mean"]
+
+        # Get HCs. There's a bit of delving into the JSON structure here because it's messy
         urls = []
         hc_tree = self.get_url("hc-trees/current?tree")
         for hc_group1 in hc_tree.get("hc-group-nodes", []):
@@ -48,6 +52,7 @@ class HcFetcher(GradeFetcher):
                                 description=hc["description"], course=hc["cornerstone-code"], mean=hc_means[hc["id"]])
                     db.session.add(new_hc)
         self.db_commit()
+        # Add the grades to the database
         with concurrent.futures.ThreadPoolExecutor(max_workers=20) as pool:
             for grade in pool.map(self.get_grade, urls):
                 if grade is not None:
@@ -55,6 +60,7 @@ class HcFetcher(GradeFetcher):
         self.db_commit()
 
     def get_grade(self, hc_id):
+        """Fetches assignment and class grades for an HC"""
         grades_data = self.get_url("outcomeindex/performance?hc-item=" + str(hc_id))
         for grade in grades_data:
             time = dateutil.parser.parse(grade["created-on"])
@@ -65,16 +71,17 @@ class HcFetcher(GradeFetcher):
             return new_grade
 
     def is_transferred(self, hc_id, grade):
-
+        """Checks whether or not a grade is transferred by looking at its corresponding 'focused outcomes'"""
         if grade["type"] == "assignment":
-            assignment = self.get_url("assignments/{}/nested_for_detail_page".format(
-                grade["assignment-id"]))
+            assignment = self.get_url("assignments/{}/nested_for_detail_page".format(grade["assignment-id"]))
+            # Creates a list of foregrounded HCs from the json structure
             foregrounded = [focused_hc.get("hc-item").get("id") for focused_hc in assignment.get("focused-outcomes", [])
                             if focused_hc.get("hc-item") is not None]
             return hc_id not in foregrounded
         else:
             grade_class = self.get_url("classes/{}/class_edit_page".format(
                 grade["klass-id"]))
+            # Creates a list of foregrounded HCs from the json structure
             foregrounded = [focused_hc.get("hc-item").get("id") for focused_hc in
                             grade_class["assessment"].get("focused-outcomes", [])
                             if focused_hc.get("hc-item") is not None]
@@ -86,6 +93,7 @@ class LoFetcher(GradeFetcher):
         super().__init__(session)
 
     def get_grades(self):
+        """Gets all LO grades, including granular assignment and class scores"""
         terms_list = self.get_url("terms/with-lo-trees")
         terms = [term["id"] for term in terms_list]
         urls = []
@@ -98,6 +106,7 @@ class LoFetcher(GradeFetcher):
                 if "learning-outcome" in lo:
                     lo_means[lo["learning-outcome"]] = lo["mean"]
             lo_tree = self.get_url("terms/" + str(term) + "/lo-trees")
+            # fetches information for every LO in the term
             for course in lo_tree:
                 for co in course["course-objectives"]:
                     for lo in co["learning-outcomes"]:
@@ -107,13 +116,14 @@ class LoFetcher(GradeFetcher):
                                     course=course["course"]["course-code"], mean=lo_means[lo["id"]])
                         db.session.add(new_lo)
         self.db_commit()
+        # Fetches individual LO grades
         with concurrent.futures.ThreadPoolExecutor(max_workers=20) as pool:
             for grade in pool.map(self.get_grade, urls):
                 if grade is not None:
                     db.session.add(grade)
         self.db_commit()
-
     def get_grade(self, lo_id):
+        """Checks whether or not a grade is transferred by looking at its corresponding 'focused outcomes'"""
         grades_data = self.get_url("outcomeindex/performance?learning-outcome=" + str(lo_id))
         for grade in grades_data:
             time = dateutil.parser.parse(grade["created-on"])

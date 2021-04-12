@@ -1,18 +1,25 @@
-import forum_fetcher
+import os
 import unittest
-from web.serve import db, Lo, LoGrade, Hc,HcGrade
+from dashboard import db
+from dashboard.models import Lo, LoGrade, Hc, HcGrade
+from dashboard.GradeFetcher import LoFetcher, HcFetcher
 
-session_id = "4vht0a8arc3gowc8cr8j4ww654voh3fi"
+# To run this, set the environment variable SESSION_ID to your Forum session id
+session_id = os.environ.get("SESSION_ID")
 class FetcherTest(unittest.TestCase):
 
     def test_lo_fetch(self):
-        fetcher = forum_fetcher.LoFetcher(session_id)
+        """Test fetching LOs"""
+        fetcher = LoFetcher(session_id)
         fetcher.get_grades()
+        # Test that database was filled
         assert db.session.query(Lo).filter_by(user_id=session_id).first()
         assert db.session.query(LoGrade).filter_by(user_id=session_id).first()
     def test_hc_fetch(self):
-        fetcher = forum_fetcher.HcFetcher(session_id)
+        """Test fetching Hcs"""
+        fetcher = HcFetcher(session_id)
         fetcher.get_grades()
+        # Test that database was filled
         assert db.session.query(Hc).filter_by(user_id=session_id).first()
         assert db.session.query(HcGrade).filter_by(user_id=session_id).first()
 
