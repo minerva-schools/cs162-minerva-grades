@@ -1,33 +1,52 @@
 from flask.globals import session
-from dashboard import app
+from dashboard import app, db
 from dashboard.forms import LoginForm
-from dashboard.models import Lo, LoGrade, Hc, HcGrade
+from dashboard.models import User,Lo, LoGrade, Hc, HcGrade
 from dashboard.GradeFetcher import LoFetcher, HcFetcher
 from flask import render_template, url_for, flash, redirect, request, abort
 from flask_login import login_user, current_user, logout_user, login_required
 
-
-@app.route("/")
-def home():
-    return render_template('index.html')
+import pandas as pd
+from altair import Chart, X, Y, Axis, Data, DataFormat,Scale
 
 
+@app.route("/", methods=['GET', 'POST'])
 @app.route("/login", methods=['GET', 'POST'])
 def login():
-    # if current_user.is_authenticated:
-    #   return redirect(url_for('dashboard'))
-    form = LoginForm()
-    if form.validate_on_submit():
-        fetcher = LoFetcher(form.sessionID.data)
-        fetcher.get_grades()
+    #if current_user.is_authenticated:
+    #  return redirect(url_for('dashboard'))
 
-        user = Lo.query.filter_by(user_id=form.sessionID.data).first()
-        if user:
-            login_user(user)
-            flash(f'Hi {user.user_id}, you have been logged in.', 'success')
-            return redirect(url_for('dashboard'))
+    form = LoginForm()      
+    if form.validate_on_submit():
+
+        try:
+            user = User(user_id=form.sessionID.data)
+
+          #  if user != User.query.filter_by(user_id=form.sessionID.data).first():
+            db.session.add(user)
+            db.session.commit()
+
+            #fetch HCs
+            HcFetch = HcFetcher(form.sessionID.data)
+            HcFetch.get_grades()
+            userHcFetched = Hc.query.filter_by(user_id = form.sessionID.data).first()
+
+            #fetch Los
+            LoFetch = LoFetcher(form.sessionID.data)
+            LoFetch.get_grades()
+            userLoFetched = Lo.query.filter_by(user_id = form.sessionID.data).first()
+
+        except:
+            flash('Login Unsuccessful. Please Check Session ID', 'danger')
+
         else:
-            flash('Login Unsuccessful. Please check email and password', 'danger')
+            #checks if fetcher request went through
+            if user and userHcFetched and userLoFetched:
+                login_user(user)
+                flash(f'Hi {user.user_id}, you have been logged in.', 'success')
+                return redirect(url_for('dashboard'))
+            else:
+                flash('Login Unsuccessful. Please check session ID', 'danger')
     return render_template('login.html', title='Welcome', form=form)
 
 
@@ -57,4 +76,6 @@ def settings():
 
 @app.route("/logout")
 def logout():
-    return render_template('index.html')
+    logout_user()
+    flash('You have been logged out.', 'success')
+    return redirect(url_for('login'))
