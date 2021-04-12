@@ -15,7 +15,7 @@ python-dateutil~=2.8.1
 
 #login libraries
 WTForms==2.1
-Flask-WTF==0.14.2
+Flask-WTF==0.14.3
 Flask-Login==0.4.1
 
 #data handling
