@@ -45,6 +45,18 @@
     {% block body %}
     <!-- set the top blank space -->
     <div class='top-container'>
+    <!-- login message -->
+    <div class="col-md-8">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                {{ message }}
+                </div>
+            {% endfor %}
+            {% endif %}
+        {% endwith %}
+        </div>
 
     </div>
     <!-- Section containing sidebar view-->
@@ -103,5 +115,9 @@
     <div class="additional-info">
         {% block table_info%}{%endblock%}
     </div>
+
+
     {% endblock %}
+
+
 </body>

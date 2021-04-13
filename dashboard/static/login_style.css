@@ -1,10 +1,11 @@
+/* left div */
+.left {
+  max-width: 700px;
+}
+
 /* Minerva Grades */
 .title {
-  position: absolute;
-  width: 213px;
-  height: 35px;
-  left: 57px;
-  top: 86px;
+  padding: 3rem 5rem;
 
   font-family: Roboto;
   font-style: normal;
@@ -18,12 +19,8 @@
 
 /* A Dashboard Tool For Minerva Students to Understand Their Grades! */
 .big-intro {
-  position: absolute;
-  width: 507px;
-  height: 147px;
-  left: 57px;
-  top: 230px;
-
+  padding: 20px 5rem;
+  width: 80%;
   font-family: Open Sans;
   font-style: normal;
   font-weight: bold;
@@ -35,12 +32,7 @@
 
 /* Welcome back! Please enter your session ID. */
 .small-intro {
-  position: absolute;
-  width: 362px;
-  height: 21px;
-  left: 57px;
-  top: 391px;
-
+  padding: 0px 5rem 40px;
   font-family: Roboto;
   font-style: normal;
   font-weight: normal;
@@ -55,25 +47,14 @@
 
 .sessionid-container {
   /* format sessionid input box */
-  position: absolute;
-  width: 607px;
-  height: 74px;
-  left: 57px;
-  top: 480px;
-
-  background: #ffffff;
-  border: 1px solid #000000;
+  padding: 20px 5rem;  
+  /*border: 1px solid #000000;*/
   box-sizing: border-box;
 }
 
 /* How to Find Your Session ID */
-.sessionid-container a {
-  position: absolute;
-  width: 226px;
-  height: 21px;
-  left: 368px;
-  top: 90px;
-
+.form-group a {
+  float: right;
   font-family: Roboto;
   font-style: normal;
   font-weight: normal;
@@ -82,26 +63,13 @@
   /* identical to box height */
 
   text-decoration-line: underline;
-
   color: rgba(0, 0, 0, 0.61);
-
   white-space: nowrap;
-}
-
-form {
-  /* center the form */
-  margin: 0 auto;
-  width: 300px;
-  padding: 1em;
 }
 
 input[type="submit"] {
   /* format the sessionid submit button */
-  position: absolute;
-  width: 129px;
-  height: 54px;
-  left: 0px;
-  top: 178px;
+  padding: 20px 5rem;  
 
   font-size: 14px;
   border: none;
@@ -116,6 +84,10 @@ input[type="submit"] {
   font-size: 18px;
   line-height: 21px;
   color: #ffffff;
+}
+
+.alert {
+  float: right;
 }
 
 .img {

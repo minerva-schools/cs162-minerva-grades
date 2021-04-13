@@ -13,13 +13,15 @@ from altair import Chart, X, Y, Axis, Data, DataFormat,Scale
 @app.route("/", methods=['GET', 'POST'])
 @app.route("/login", methods=['GET', 'POST'])
 def login():
-    #if current_user.is_authenticated:
-    #  return redirect(url_for('dashboard'))
+    if current_user.is_authenticated:
+      return redirect(url_for('dashboard'))
 
     form = LoginForm()      
     if form.validate_on_submit():
 
         try:
+            db.create_all()
+
             user = User(user_id=form.sessionID.data)
 
           #  if user != User.query.filter_by(user_id=form.sessionID.data).first():
@@ -43,7 +45,7 @@ def login():
             #checks if fetcher request went through
             if user and userHcFetched and userLoFetched:
                 login_user(user)
-                flash(f'Hi {user.user_id}, you have been logged in.', 'success')
+                flash(f'Hi, you have been logged in.', 'success')
                 return redirect(url_for('dashboard'))
             else:
                 flash('Login Unsuccessful. Please check session ID', 'danger')
@@ -77,5 +79,6 @@ def settings():
 @app.route("/logout")
 def logout():
     logout_user()
+    db.drop_all() #wipes data on logout
     flash('You have been logged out.', 'success')
     return redirect(url_for('login'))
