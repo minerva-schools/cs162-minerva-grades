@@ -166,3 +166,8 @@ input[type="submit"] {
 
   color: #000000;
 }
+
+/* Login Spinner */
+#loading img {
+  width: 200px;
+}

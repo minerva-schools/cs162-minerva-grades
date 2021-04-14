@@ -17,6 +17,20 @@
 	<script src="js/html5shiv.js"></script>
 	<script src="js/respond.min.js"></script>
 	<![endif]-->
+
+	<!--Loading Spinner Jquery-->
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+	<script>
+    $(document).ready(function () {
+
+        $("#login").submit(function (e) {
+            //disable the submit button
+            $("#submit").attr("disabled", true);
+            return true;
+        });
+    });
+	</script>
+
 </head>
 <body>
 	<div class = "left">
@@ -27,7 +41,7 @@
 		</div>
 
 		<div class="sessionid-container">
-			<form method="POST" action="">
+			<form id = 'login' method="POST" action="" onclick="this.form.submit();">
 			<!--Flask Login Tag-->
 			{{ form.hidden_tag() }}
 				<fieldset class="form-group" >
@@ -48,10 +62,11 @@
 					<a href="#">How to Find Your Session ID</a>
 				</fieldset>
 			
-				<div class="form-group" >
-					{{ form.submit(class="btn btn-outline-info") }}
+				<div class="form-group" onclick="$('#loading').show()">
+					{{ form.submit(class="btn btn-outline-info" ) }}
 				</div>
 			</form>
+			<div id="loading" style="display:none;"><img src="../static/images/loginSpinner.gif" alt=""; />Asking Forum For Your Grades!</div>
 		</div>
 
 		<div class="container">

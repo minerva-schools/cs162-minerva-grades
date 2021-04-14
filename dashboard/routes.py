@@ -18,9 +18,10 @@ def login():
 
     form = LoginForm()      
     if form.validate_on_submit():
-        try:
+
+        try:  
             user = User(user_id=form.sessionID.data)
-            db.session.add(user)
+            db.session.add(user)  
             db.session.commit()
 
             #fetch HCs
@@ -35,6 +36,7 @@ def login():
 
         except:
             flash('Login unsuccessful. Please check Session ID.', 'danger')
+            db.session.rollback()
 
         else:
             #checks if fetcher request went through
