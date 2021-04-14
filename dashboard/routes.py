@@ -11,20 +11,15 @@ from altair import Chart, X, Y, Axis, Data, DataFormat,Scale
 
 
 @app.route("/", methods=['GET', 'POST'])
-@app.route("/login", methods=['GET', 'POST'])
+@app.route("/login",methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
       return redirect(url_for('dashboard'))
 
     form = LoginForm()      
     if form.validate_on_submit():
-
         try:
-            db.create_all()
-
             user = User(user_id=form.sessionID.data)
-
-          #  if user != User.query.filter_by(user_id=form.sessionID.data).first():
             db.session.add(user)
             db.session.commit()
 
@@ -39,7 +34,7 @@ def login():
             userLoFetched = Lo.query.filter_by(user_id = form.sessionID.data).first()
 
         except:
-            flash('Login Unsuccessful. Please Check Session ID', 'danger')
+            flash('Login unsuccessful. Please check Session ID.', 'danger')
 
         else:
             #checks if fetcher request went through
@@ -48,7 +43,7 @@ def login():
                 flash(f'Hi, you have been logged in.', 'success')
                 return redirect(url_for('dashboard'))
             else:
-                flash('Login Unsuccessful. Please check session ID', 'danger')
+                flash('Login unsuccessful. Please check Session ID.', 'danger')
     return render_template('login.html', title='Welcome', form=form)
 
 
@@ -78,7 +73,29 @@ def settings():
 
 @app.route("/logout")
 def logout():
+    #empty database for particular user.
+    #delete loGrades
+    loGrades = LoGrade.query.filter_by(user_id = current_user.get_id()).all()
+    for loGrade in loGrades:
+        db.session.delete(loGrade)
+    #delete hcGrades
+    hcGrades = HcGrade.query.filter_by(user_id = current_user.get_id()).all()
+    for hcGrade in hcGrades:
+        db.session.delete(hcGrade)
+    #delete los
+    los = Lo.query.filter_by(user_id = current_user.get_id()).all()
+    for lo in los:
+        db.session.delete(lo)
+    #delete hcs
+    hcs = Hc.query.filter_by(user_id = current_user.get_id()).all()
+    for hc in hcs:
+        db.session.delete(hc)
+
+    #delete user after logout
+    user = User.query.filter_by(user_id = current_user.get_id()).first()
+    db.session.delete(user)
+    db.session.commit()
     logout_user()
-    db.drop_all() #wipes data on logout
+
     flash('You have been logged out.', 'success')
     return redirect(url_for('login'))
