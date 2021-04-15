@@ -20,32 +20,43 @@ def login():
     if form.validate_on_submit():
 
         try:  
+            
             user = User(user_id=form.sessionID.data)
-            db.session.add(user)  
-            db.session.commit()
 
-            #fetch HCs
-            HcFetch = HcFetcher(form.sessionID.data)
-            HcFetch.get_grades()
-            userHcFetched = Hc.query.filter_by(user_id = form.sessionID.data).first()
+            print(user)
+            #checks if user is already in database
+            if User.query.filter_by(user_id = form.sessionID.data).first() != None:
+                login_user(user)
+                flash(f'Hi, you have been logged in.', 'success')
+                print("old user")
 
-            #fetch Los
-            LoFetch = LoFetcher(form.sessionID.data)
-            LoFetch.get_grades()
-            userLoFetched = Lo.query.filter_by(user_id = form.sessionID.data).first()
+                return redirect(url_for('dashboard'))
 
+            #if not, add user to db and call forum fetcher
+            else:
+                db.session.add(user)  
+
+                #fetch Hcs
+                HcFetch = HcFetcher(form.sessionID.data)
+                HcFetch.get_grades()
+
+                #fetch Los
+                LoFetch = LoFetcher(form.sessionID.data)
+                LoFetch.get_grades()
+
+                db.session.commit()
+                login_user(user)
+                print("new user")
+
+
+                flash(f'Hi, you have been logged in.', 'success')
+                return redirect(url_for('dashboard'))
         except:
             flash('Login unsuccessful. Please check Session ID.', 'danger')
             db.session.rollback()
 
-        else:
-            #checks if fetcher request went through
-            if user and userHcFetched and userLoFetched:
-                login_user(user)
-                flash(f'Hi, you have been logged in.', 'success')
-                return redirect(url_for('dashboard'))
-            else:
-                flash('Login unsuccessful. Please check Session ID.', 'danger')
+
+
     return render_template('login.html', title='Welcome', form=form)
 
 
@@ -95,6 +106,7 @@ def logout():
 
     #delete user after logout
     user = User.query.filter_by(user_id = current_user.get_id()).first()
+    print(user)
     db.session.delete(user)
     db.session.commit()
     logout_user()
