@@ -110,9 +110,6 @@ class LoFetcher(GradeFetcher):
         
         # Fetches individual LO grades
         with concurrent.futures.ThreadPoolExecutor(max_workers=20) as pool:
-            for grade in pool.map(self.get_grade, urls):
-                if grade is not None:
-                    db.session.add(grade)
             for grades in pool.map(self.get_grade, urls):
                 if grades is not None:
                     db.session.add_all(grades)
