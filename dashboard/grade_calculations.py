@@ -24,7 +24,7 @@ def calc_course_grade(i):
     group_by_grade = i.groupby(by=['co_id'])['grade'].sum()
     group_by_weight = i.groupby(by=['co_id'])['weight'].sum()
     co_grade = group_by_grade / group_by_weight
-    return co_grade.mean()
+    return round(co_grade.mean(),2)
 
 
 def co_grade_over_time(course):
