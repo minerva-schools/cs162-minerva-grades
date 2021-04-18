@@ -1,4 +1,7 @@
-{% from "macros.html" import nav_link with context %} {% extends "base.html" %}
+{% from "macros.html" import nav_link with context %}
+{% from "macros.html" import info_table with context %}
+{% from "macros.html" import info_table_title with context %}
+{% extends "base.html" %}
 <!-- Add pages title-->
 {% block title %}Dashboard{% endblock %}
 <!-- Import all parent elements from base layout-->
@@ -16,5 +19,15 @@
     parse("/courses/lo","lo");
 </script>
     <div id="lo"></div>
+
+<script type="text/javascript">
+    parse("/courses/cg","cg");
+</script>
+    <div id="cg"></div>
+
+<div class="additional-info">
+    {{ info_table(title, headings, data) }}
+</div>
+
 
 {% endblock %}

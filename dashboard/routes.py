@@ -5,6 +5,8 @@ from dashboard.models import User,Lo, LoGrade, Hc, HcGrade
 from dashboard.GradeFetcher import LoFetcher, HcFetcher
 from flask import render_template, url_for, flash, redirect, request, abort
 from flask_login import login_user, current_user, logout_user, login_required
+from sqlalchemy import func, cast, case
+from sqlalchemy import Float
 
 import pandas as pd
 from altair import Chart, X, Y, Axis, Data, DataFormat,Scale
@@ -75,7 +77,27 @@ def hcs():
 @app.route("/courses")
 @login_required
 def courses():
-    return render_template('courses.html')
+    # query Lo grades
+    Lo_grades_query = db.session.query(
+        Lo.course, Lo.co_id, Lo.term,
+        (cast(func.sum(LoGrade.score * LoGrade.weight), Float) / cast(func.sum(LoGrade.weight), Float)).label("cograde")
+    ).join(Lo, Lo.lo_id == LoGrade.lo_id).group_by(Lo.co_id).subquery("Lo_grades_query")
+
+    # query co grades and add major information
+    Co_grades_query = db.session.query(Lo_grades_query.c.course,
+                             case([(Lo_grades_query.c.course.like('CS%'), 'Computational Science'),
+                                   (Lo_grades_query.c.course.like('SS%'), 'Social Science'),
+                                   (Lo_grades_query.c.course.like('AH%'), 'Arts & Humanities'),
+                                   (Lo_grades_query.c.course.like('NS%'), 'Natural Science')
+                                   ], else_='Business').label('major'),
+                             Lo_grades_query.c.term,
+                             func.round((func.avg(Lo_grades_query.c.cograde)), 2).label('cograde')).group_by(
+        Lo_grades_query.c.course).all()
+
+    title = "Dataviz course"
+    headings = ['Name', 'Major', 'Semester', 'Cograde']
+
+    return render_template('courses.html', title=title, headings=headings, data=Co_grades_query)
 
 
 @app.route("/settings")
