@@ -66,10 +66,19 @@
 
 <!-- Course selection dropdown -->
 {% macro dropdown_list(variable) %}
-    <form method="POST">
-        {{ form.csrf_token }}
-        {{ form.variable }}
-        <input type="submit">
-    </form>
+    <div class="select-frame">
+        <div class="select-bound">
+            <form method="POST">
+                <div class="select-content">
+                    {{ form.csrf_token }}
+                    {{ variable }}
+                </div>
+                <input type="submit" value="Submit" class = "select-submit">
+            </form>
+        </div>
+    </div>
 {%- endmacro %}
+
 <!-- Timeline selection dropdown -->
+
+
