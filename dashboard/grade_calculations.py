@@ -2,7 +2,7 @@ from dashboard.GradeFetcher import GradeFetcher, HcFetcher, LoFetcher
 from dashboard import db
 from dashboard.models import Hc, HcGrade, LoGrade, Lo
 import pandas as pd
-from sqlalchemy import cast, Float, func
+from sqlalchemy import cast, Float, func, case
 
 
 def get_transfers():
@@ -52,3 +52,25 @@ def co_grade_over_time(course):
     df = pd.DataFrame(result, columns=['Date', 'Course Grade'])
 
     return df
+
+def Co_grade_query():
+    # query Lo grades
+    Lo_grades_query = db.session.query(
+        Lo.course, Lo.co_id, Lo.term,
+        (cast(func.sum(LoGrade.score * LoGrade.weight), Float) / cast(func.sum(LoGrade.weight), Float)).label("cograde")
+    ).join(Lo, Lo.lo_id == LoGrade.lo_id).group_by(Lo.co_id).subquery("Lo_grades_query")
+
+    # query co grades and add major information
+    Co_grades_query = db.session.query(Lo_grades_query.c.course,
+                                       case([(Lo_grades_query.c.course.like('CS%'), 'Computational Science'),
+                                             (Lo_grades_query.c.course.like('SS%'), 'Social Science'),
+                                             (Lo_grades_query.c.course.like('AH%'), 'Arts & Humanities'),
+                                             (Lo_grades_query.c.course.like('NS%'), 'Natural Science')
+                                             ], else_='Business').label('major'),
+                                       Lo_grades_query.c.term,
+                                       func.round((func.avg(Lo_grades_query.c.cograde)), 2).label('cograde')).group_by(
+        Lo_grades_query.c.course)
+
+    print(Co_grades_query)
+
+    return Co_grades_query
