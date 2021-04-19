@@ -10,6 +10,7 @@ from altair import Chart, X, Y, Axis, Data, DataFormat,Scale
 @app.route("/courses/cg")
 def course_grade():
     selected_course = session.get('selected_course', None)
+    # show all course grades if haven't selected course from dropdown
     if selected_course == None:
         source = pd.read_sql(grade_calculations.Co_grade_query().statement,db.session.bind)
 
@@ -24,6 +25,7 @@ def course_grade():
         # always return to json.
         return chart.to_json()
     else:
+        # show individual course trend for the selected course from dropdown list
         source = grade_calculations.co_grade_over_time(selected_course)
 
         # make interactive chart
