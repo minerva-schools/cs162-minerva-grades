@@ -51,15 +51,34 @@
 {%- endmacro %}
 
 {% macro info_table(title, headings, data) -%}
-    <div class="dataviz_title">
-    {{ info_table_title(title) }}
-    </div>
-    <div class="table-head">
-    {{ info_table_headings(headings) }}
-    </div>
-    <div class="table-body">
-    {{ info_table_data(data) }}
+    <div class="additional-info">
+        <div class="table-title">
+        {{ info_table_title(title) }}
+        </div>
+        <div class="table-head">
+        {{ info_table_headings(headings) }}
+        </div>
+        <div class="table-body">
+        {{ info_table_data(data) }}
+        </div>
     </div>
 {%- endmacro %}
+
 <!-- Course selection dropdown -->
+{% macro dropdown_list(variable) %}
+    <div class="select-frame">
+        <div class="select-bound">
+            <form method="POST">
+                <div class="select-content">
+                    {{ form.csrf_token }}
+                    {{ variable }}
+                </div>
+                <input type="submit" value="Submit" class = "select-submit">
+            </form>
+        </div>
+    </div>
+{%- endmacro %}
+
 <!-- Timeline selection dropdown -->
+
+
