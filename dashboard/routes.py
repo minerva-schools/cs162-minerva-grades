@@ -1,48 +1,49 @@
 from flask.globals import session
 from dashboard import app, db
-from dashboard.forms import LoginForm
-from dashboard.models import User,Lo, LoGrade, Hc, HcGrade
+from dashboard.forms import LoginForm, DropDownList
+from dashboard.models import User, Lo, LoGrade, Hc, HcGrade
 from dashboard.GradeFetcher import LoFetcher, HcFetcher
 from flask import render_template, url_for, flash, redirect, request, abort
 from flask_login import login_user, current_user, logout_user, login_required
 from sqlalchemy import func, cast, case
 from sqlalchemy import Float
+from dashboard import grade_calculations
 
 import pandas as pd
-from altair import Chart, X, Y, Axis, Data, DataFormat,Scale
+from altair import Chart, X, Y, Axis, Data, DataFormat, Scale
 
 
 @app.route("/", methods=['GET', 'POST'])
-@app.route("/login",methods=['GET', 'POST'])
+@app.route("/login", methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-      return redirect(url_for('dashboard'))
+        return redirect(url_for('dashboard'))
 
-    form = LoginForm()      
+    form = LoginForm()
     if form.validate_on_submit():
 
-        try:  
-            
+        try:
+
             user = User(user_id=form.sessionID.data)
 
             print(user)
-            #checks if user is already in database
-            if User.query.filter_by(user_id = form.sessionID.data).first() != None:
+            # checks if user is already in database
+            if User.query.filter_by(user_id=form.sessionID.data).first() != None:
                 login_user(user)
                 flash(f'Hi, you have been logged in.', 'success')
                 print("old user")
 
                 return redirect(url_for('dashboard'))
 
-            #if not, add user to db and call forum fetcher
+            # if not, add user to db and call forum fetcher
             else:
-                db.session.add(user)  
+                db.session.add(user)
 
-                #fetch Hcs
+                # fetch Hcs
                 HcFetch = HcFetcher(form.sessionID.data)
                 HcFetch.get_grades()
 
-                #fetch Los
+                # fetch Los
                 LoFetch = LoFetcher(form.sessionID.data)
                 LoFetch.get_grades()
 
@@ -50,14 +51,11 @@ def login():
                 login_user(user)
                 print("new user")
 
-
                 flash(f'Hi, you have been logged in.', 'success')
                 return redirect(url_for('dashboard'))
         except:
             flash('Login unsuccessful. Please check Session ID.', 'danger')
             db.session.rollback()
-
-
 
     return render_template('login.html', title='Welcome', form=form)
 
@@ -74,30 +72,29 @@ def hcs():
     return render_template('hcs.html')
 
 
-@app.route("/courses")
+@app.route("/courses", methods=['GET', 'POST'])
 @login_required
 def courses():
-    # query Lo grades
-    Lo_grades_query = db.session.query(
-        Lo.course, Lo.co_id, Lo.term,
-        (cast(func.sum(LoGrade.score * LoGrade.weight), Float) / cast(func.sum(LoGrade.weight), Float)).label("cograde")
-    ).join(Lo, Lo.lo_id == LoGrade.lo_id).group_by(Lo.co_id).subquery("Lo_grades_query")
+    Co_grades_query = grade_calculations.Co_grade_query().all()
 
-    # query co grades and add major information
-    Co_grades_query = db.session.query(Lo_grades_query.c.course,
-                             case([(Lo_grades_query.c.course.like('CS%'), 'Computational Science'),
-                                   (Lo_grades_query.c.course.like('SS%'), 'Social Science'),
-                                   (Lo_grades_query.c.course.like('AH%'), 'Arts & Humanities'),
-                                   (Lo_grades_query.c.course.like('NS%'), 'Natural Science')
-                                   ], else_='Business').label('major'),
-                             Lo_grades_query.c.term,
-                             func.round((func.avg(Lo_grades_query.c.cograde)), 2).label('cograde')).group_by(
-        Lo_grades_query.c.course).all()
-
-    title = "Dataviz course"
+    title = "Course Info"
     headings = ['Name', 'Major', 'Semester', 'Cograde']
 
-    return render_template('courses.html', title=title, headings=headings, data=Co_grades_query)
+    form = DropDownList()
+    available_courses = db.session.query(Lo.course).distinct().all()
+    # form the list of tuples for SelectField
+    form.course.choices = [(i, available_courses[i][0]) for i in range(len(available_courses))]
+    session['selected_course'] = None
+
+
+    # get data from the selected field
+    if request.method == 'POST':
+        course_idx = int(form.course.data)
+        course = available_courses[course_idx][0]
+        session['selected_course'] = str(course)
+        return render_template('courses.html', title=title, headings=headings, data=Co_grades_query, form=form, course=course)
+
+    return render_template('courses.html', title=title, headings=headings, data=Co_grades_query, form=form, course='all')
 
 
 @app.route("/settings")
@@ -108,26 +105,26 @@ def settings():
 
 @app.route("/logout")
 def logout():
-    #empty database for particular user.
-    #delete loGrades
-    loGrades = LoGrade.query.filter_by(user_id = current_user.get_id()).all()
+    # empty database for particular user.
+    # delete loGrades
+    loGrades = LoGrade.query.filter_by(user_id=current_user.get_id()).all()
     for loGrade in loGrades:
         db.session.delete(loGrade)
-    #delete hcGrades
-    hcGrades = HcGrade.query.filter_by(user_id = current_user.get_id()).all()
+    # delete hcGrades
+    hcGrades = HcGrade.query.filter_by(user_id=current_user.get_id()).all()
     for hcGrade in hcGrades:
         db.session.delete(hcGrade)
-    #delete los
-    los = Lo.query.filter_by(user_id = current_user.get_id()).all()
+    # delete los
+    los = Lo.query.filter_by(user_id=current_user.get_id()).all()
     for lo in los:
         db.session.delete(lo)
-    #delete hcs
-    hcs = Hc.query.filter_by(user_id = current_user.get_id()).all()
+    # delete hcs
+    hcs = Hc.query.filter_by(user_id=current_user.get_id()).all()
     for hc in hcs:
         db.session.delete(hc)
 
-    #delete user after logout
-    user = User.query.filter_by(user_id = current_user.get_id()).first()
+    # delete user after logout
+    user = User.query.filter_by(user_id=current_user.get_id()).first()
     print(user)
     db.session.delete(user)
     db.session.commit()
