@@ -49,6 +49,6 @@ def co_grade_over_time(course):
         co_grade = calc_course_grade(current)
         result.append([date, co_grade])
 
-    df = pd.DataFrame(result, columns=['Date', 'Co_grade'])
+    df = pd.DataFrame(result, columns=['Date', 'Course Grade'])
 
     return df
