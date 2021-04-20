@@ -17,14 +17,6 @@ class GradeFetcher():
         assert r.ok, "Forum request not successful"
         return r.json()
 
-    def db_commit(self):
-        """Helper Function to commit to database and rollback if it fails, then re-raise the error"""
-        try:
-            db.session.commit()
-        except:
-            db.session.rollback()
-            raise
-
 
 class HcFetcher(GradeFetcher):
     def __init__(self, session):
@@ -51,24 +43,24 @@ class HcFetcher(GradeFetcher):
                     new_hc = Hc(hc_id=hc["id"], user_id=self._cookie["sessionid"], name=hc["name"],
                                 description=hc["description"], course=hc["cornerstone-code"], mean=hc_means[hc["id"]])
                     db.session.add(new_hc)
-        self.db_commit()
+        
         # Add the grades to the database
         with concurrent.futures.ThreadPoolExecutor(max_workers=20) as pool:
-            for grade in pool.map(self.get_grade, urls):
-                if grade is not None:
-                    db.session.add(grade)
-        self.db_commit()
+            for grades in pool.map(self.get_grade, urls):
+                if grades is not None:
+                    db.session.add_all(grades)
 
     def get_grade(self, hc_id):
         """Fetches assignment and class grades for an HC"""
         grades_data = self.get_url("outcomeindex/performance?hc-item=" + str(hc_id))
+        grades = []
         for grade in grades_data:
             time = dateutil.parser.parse(grade["created-on"])
             transferred = self.is_transferred(grade["hc-item"], grade)
-            new_grade = HcGrade(grade_id=grade["id"], hc_id=hc_id, user_id=self._cookie["sessionid"],
+            grades.append(HcGrade(grade_id=grade["id"], hc_id=hc_id, user_id=self._cookie["sessionid"],
                                 score=grade["score"], weight=grade["weight"], time=time,
-                                assignment=(grade["type"] == "assignment"), transfer=transferred)
-            return new_grade
+                                assignment=(grade["type"] == "assignment"), transfer=transferred))
+        return grades
 
     def is_transferred(self, hc_id, grade):
         """Checks whether or not a grade is transferred by looking at its corresponding 'focused outcomes'"""
@@ -115,19 +107,19 @@ class LoFetcher(GradeFetcher):
                                     description=lo["description"], term=term, co_id=co["id"], co_desc=co["description"],
                                     course=course["course"]["course-code"], mean=lo_means[lo["id"]])
                         db.session.add(new_lo)
-        self.db_commit()
+        
         # Fetches individual LO grades
         with concurrent.futures.ThreadPoolExecutor(max_workers=20) as pool:
-            for grade in pool.map(self.get_grade, urls):
-                if grade is not None:
-                    db.session.add(grade)
-        self.db_commit()
+            for grades in pool.map(self.get_grade, urls):
+                if grades is not None:
+                    db.session.add_all(grades)
     def get_grade(self, lo_id):
         """Checks whether or not a grade is transferred by looking at its corresponding 'focused outcomes'"""
         grades_data = self.get_url("outcomeindex/performance?learning-outcome=" + str(lo_id))
+        grades = []
         for grade in grades_data:
             time = dateutil.parser.parse(grade["created-on"])
-            new_grade = LoGrade(grade_id=grade["id"], lo_id=lo_id, user_id=self._cookie["sessionid"],
+            grades.append(LoGrade(grade_id=grade["id"], lo_id=lo_id, user_id=self._cookie["sessionid"],
                                 score=grade["score"], weight=grade["weight"], time=time,
-                                assignment=(grade["type"] == "assignment"))
-            return new_grade
+                                assignment=(grade["type"] == "assignment")))
+        return grades

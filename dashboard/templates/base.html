@@ -109,12 +109,22 @@
     </div>
     <!-- set a container for the entire dataviz section -->
     <div class="historical">
-        {% block dataviz%}{%endblock%}
+        <div class="historical-sheet">
+            <div class="dataviz">
+                <p class="dataviz_title">{% block dataviz_title %} {% endblock%}</p>
+                <div class="full-graph">
+                    {% block dataviz %}
+                    {% endblock %}
+                </div>
+            </div>
+            <div class="additional-info">
+                {% block table_info%}
+                {% endblock %}
+            </div>
+        </div>
     </div>
     <!-- set a container for explanatory information on the right -->
-    <div class="additional-info">
-        {% block table_info%}{%endblock%}
-    </div>
+
 
 
     {% endblock %}
