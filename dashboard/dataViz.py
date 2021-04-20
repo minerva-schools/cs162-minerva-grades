@@ -34,3 +34,17 @@ def Hc_demo():
         color='course:N').interactive()
 
     return chart.to_json()
+
+#demo single course view over time (AH110)
+@app.route("/courses/single")
+def Single_course_demo():
+    Ah110Data = pd.read_sql(db.session.query(Lo).filter(course="AH110").statement, db.session.bind)
+    chart = Chart(
+    data=HcData, height=400, width=800).mark_bar().encode(
+        Y('mean:Q', 
+        scale=Scale(domain=(0, 5))
+        ),
+        X('name:N'), 
+        color='course:N').interactive()
+
+    return chart.to_json()

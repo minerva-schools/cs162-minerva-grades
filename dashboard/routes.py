@@ -75,6 +75,10 @@ def courses():
 def settings():
     return render_template('settings.html')
 
+@app.route("/singleCourse")
+@login_required
+def singleCourse():
+    return render_template('singlecourse.html')
 
 @app.route("/logout")
 def logout():
