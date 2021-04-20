@@ -17,69 +17,103 @@
 	<script src="js/html5shiv.js"></script>
 	<script src="js/respond.min.js"></script>
 	<![endif]-->
+
+	<!--Loading Spinner Jquery-->
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+	<script>
+    $(document).ready(function () {
+
+        $("#login").submit(function (e) {
+            //disable the submit button
+            $("#submit").attr("disabled", true);
+            return true;
+        });
+    });
+	</script>
+
 </head>
 <body>
-	<div class = "left">
-		<div class="title"> Minerva Grades </div>	
-		<div class="intro"> 
-			<p class="big-intro">A Dashboard Tool for Minerva Students to Understand Their Grade</p>
-			<p class="small-intro">Welcome back, please enter your session ID</p>
-		</div>
+	<div class = "cover">
+		<div class = "left">
+			<div class="title"> Minerva Grades </div>	
+			<div class="intro"> 
+				<p class="big-intro">A Grading Dashboard Tool for Minerva Students</p>
+				<p class="small-intro">Please enter your Session ID</p>
+			</div>
 
-		<div class="sessionid-container">
-			<form method="POST" action="">
-			<!--Flask Login Tag-->
-			{{ form.hidden_tag() }}
-				<fieldset class="form-group" >
+			<div class="sessionid-container">
+				<form id = 'login' method="POST" action="" onclick="this.form.submit();">
+				<!--Flask Login Tag-->
+				{{ form.hidden_tag() }}
+					<fieldset class="form-group" >
 
-					<div class="form-group">
-						{{ form.sessionID.label(class="form-control-label") }}
-						{% if form.sessionID.errors %}
-								{{ form.sessionID(class="form-control form-control-lg is-invalid") }}
-								<div class="invalid-feedback">
-										{% for error in form.sessionID.errors %}
-												<span>{{ error }}</span>
-										{% endfor %}
-								</div>
-						{% else %}
-								{{ form.sessionID(class="form-control form-control-lg") }}
-						{% endif %}
+						<div class="form-group">
+							{{ form.sessionID.label(class="form-control-label") }}
+							{% if form.sessionID.errors %}
+									{{ form.sessionID(class="form-control form-control-lg is-invalid") }}
+									<div class="invalid-feedback">
+											{% for error in form.sessionID.errors %}
+													<span>{{ error }}</span>
+											{% endfor %}
+									</div>
+							{% else %}
+									{{ form.sessionID(class="form-control form-control-lg") }}
+							{% endif %}
+						</div>
+						<a href="#">How to Find Your Session ID</a>
+					</fieldset>
+				
+					<div class="form-group" >
+						{{ form.submit(class="btn btn-outline-info", onclick="$('#loading').show()" ) }}
+						<div id="loading" style="display:none;"><img src="../static/images/loginSpinner.gif" alt=""; />Please wait. We are getting your grades from Forum. This might take several minutes</div>
 					</div>
-					<a href="#">How to Find Your Session ID</a>
-				</fieldset>
+				</form>
+				
+					
 			
-				<div class="form-group" >
-					{{ form.submit(class="btn btn-outline-info") }}
-				</div>
-			</form>
+			
+
+			
+					{% with messages = get_flashed_messages(with_categories=true) %}
+						{% if messages %}
+							{% for category, message in messages %}
+								<div class="alert alert-{{ category }}">
+									{{ message }}
+								</div>
+							{% endfor %}
+						{% endif %}
+					{% endwith %}
+				
+				{% block content %}{% endblock %}
+
+			</div>
 		</div>
-
-		<div class="container">
-      <div class="col-md-8">
-        {% with messages = get_flashed_messages(with_categories=true) %}
-          {% if messages %}
-            {% for category, message in messages %}
-              <div class="alert alert-{{ category }}">
-                {{ message }}
-              </div>
-            {% endfor %}
-          {% endif %}
-        {% endwith %}
-      </div>
-      
-      {% block content %}{% endblock %}
-    </div>
-
-
-	<div class="right">
+		<div class="right">
+			
+			<nav class="topnav">
+				<a href="#about">About</a>
+				<a href="#contact">Contact</a>	
+			</nav>
 		
-		<nav class="topnav">
-			<a class="active" id="Home" href="#">Home</a>
-			<a id="About" href="#">About Us</a>
-			<a id="Contact" href="#">Contact</a>	
-		</nav>
+				<img src="../static/images/drawing.png" alt="drawing"/>
+		</div>  
+	</div> 
+
+	<div class="main"> 
+		Qui enim voluptas. Illo rerum ab quos natus enim illum debitis in enim. Voluptatem illum ea voluptas inventore consequuntur consectetur inventore exercitationem molestiae. Cupiditate qui aliquid sit. Id iste sequi omnis reprehenderit aut voluptatibus. Corporis voluptatibus asperiores beatae nisi fugiat iste esse eveniet iure.
+ 
+		Provident aspernatur quia molestiae minima blanditiis dolorum qui aut est. Voluptates saepe autem non impedit. Quas ut eum assumenda quod voluptates quisquam nemo. Enim dolor eaque quia temporibus expedita.
+
+
+		<div id="about"></div>
+		<h1>About</h1>
+		Ducimus minus repellat sed. Atque sint quia veniam qui sint asperiores voluptate. Ullam incidunt ut mollitia et quaerat velit doloribus odit.Numquam laudantium quaerat fugit atque ut et tenetur. Nesciunt expedita ipsum at unde. Similique occaecati ipsum nobis a. Repellat ut nulla nemo. Ut voluptas reprehenderit est tempora rerum exercitationem iste. Rem voluptatem molestiae facilis inventore.
+ 
+		<div id="contact"></div>
+		<h1>Contact</h1>
+		Ducimus minus repellat sed. Atque sint quia veniam qui sint asperiores voluptate. Ullam incidunt ut mollitia et quaerat velit doloribus odit.Numquam laudantium quaerat fugit atque ut et tenetur. Nesciunt expedita ipsum at unde. Similique occaecati ipsum nobis a. Repellat ut nulla nemo. Ut voluptas reprehenderit est tempora rerum exercitationem iste. Rem voluptatem molestiae facilis inventore.
+ 
+
 	
-		  <img src="../static/images/drawing.png" alt="drawing"/>
-	</div>   
 </body>
 </html>

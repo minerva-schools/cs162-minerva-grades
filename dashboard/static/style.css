@@ -248,21 +248,56 @@ li {
 
 .historical {
     position: absolute;
-    height: 584px;
+    height: 546px;
     left: 318px;
     right: 18px;
-    top: 409px;
+    top: 340px;
 }
 
+.historical-sheet {
+
+
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+
+    background: #FFFFFF;
+    border: 1px solid rgba(13, 120, 190, 0.35);
+    box-sizing: border-box;
+    border-radius: 8px;
+}
+
+.dataviz {
+    /* cards / default */
+
+
+    position: absolute;
+    right: 476px;
+    top: 0px;
+    bottom: 1.32px;
+}
+
+.full-graph {
+        /* full graph */
+
+
+    position: absolute;
+    height: 316px;
+    left: 32px;
+    right: 494px;
+    top: 100px;
+}
 
 /* set properties of the additional info box*/
 
 .additional-info {
     position: absolute;
-    width: 342px;
-    height: 546px;
+    left: 628px;
     right: 0px;
     top: 0px;
+    bottom: 1.32px;
 }
 
 
@@ -274,4 +309,135 @@ input {
     margin-bottom: 5px;
     border: None;
     width: 117px;
+}
+
+/* set properties of the display table heading*/
+.table-head{
+    padding-top: 119px;
+    padding-right:17px;
+    color: #9FA2B4;
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 19px;
+    letter-spacing: 0.2px;
+    width:98%;
+}
+
+/* set properties of the display table body*/
+.table-body{
+    top: 154px;
+    width:98%;
+    height:394px;
+    line-height: 98px;
+    overflow-y:scroll;
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+
+    letter-spacing: 0.2px;
+}
+
+.table-head table,.table-body table{width:100%;border-collapse: collapse;}
+
+.table-body table tr:nth-child(2n+1){background-color:#f2f2f2;}
+
+/* set properties of the display table title*/
+.dataviz_title {
+    /* Course Grade Trends */
+    position: absolute;
+    width: 400px;
+    height: 24px;
+    left: 50px;
+    top: 37px;
+
+    /* Bold 19 (0.4 px) */
+
+    font-family: Mulish;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 19px;
+    line-height: 24px;
+    /* identical to box height */
+
+    letter-spacing: 0.4px;
+
+    color: #252733;
+}
+
+.table-title {
+    /* Course Info */
+
+
+    position: absolute;
+    height: 30px;
+    left: 23px;
+    right: 336px;
+    top: 37px;
+
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 19px;
+    line-height: 26px;
+    letter-spacing: 0.4px;
+
+    /* grayscale / black */
+
+    color: #252733;
+
+
+}
+
+
+.select-frame {
+    position: absolute;
+    height: 70px;
+    left: 1010px;
+    right: 102px;
+    top: 230px;
+
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.select-bound {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+
+    /* Gray 6 */
+
+    background: #F2F2F2;
+    /* S8 Grey / 2dp */
+
+    box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.48), 0px 0px 4px rgba(0, 0, 0, 0.12);
+    border-radius: 10px;
+}
+
+.select-content {
+    position: absolute;
+    left: 30px;
+    width: 181px;
+    top: 20px;
+
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.select-submit {
+    position: absolute;
+    left: 60%;
+    top: 15.62%;
+    bottom: 15.62%;
+
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
 }

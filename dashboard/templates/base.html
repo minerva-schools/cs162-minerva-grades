@@ -45,6 +45,18 @@
     {% block body %}
     <!-- set the top blank space -->
     <div class='top-container'>
+    <!-- login message -->
+    <div class="col-md-8">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                {{ message }}
+                </div>
+            {% endfor %}
+            {% endif %}
+        {% endwith %}
+        </div>
 
     </div>
     <!-- Section containing sidebar view-->
@@ -97,11 +109,25 @@
     </div>
     <!-- set a container for the entire dataviz section -->
     <div class="historical">
-        {% block dataviz%}{%endblock%}
+        <div class="historical-sheet">
+            <div class="dataviz">
+                <p class="dataviz_title">{% block dataviz_title %} {% endblock%}</p>
+                <div class="full-graph">
+                    {% block dataviz %}
+                    {% endblock %}
+                </div>
+            </div>
+            <div class="additional-info">
+                {% block table_info%}
+                {% endblock %}
+            </div>
+        </div>
     </div>
     <!-- set a container for explanatory information on the right -->
-    <div class="additional-info">
-        {% block table_info%}{%endblock%}
-    </div>
+
+
+
     {% endblock %}
+
+
 </body>
