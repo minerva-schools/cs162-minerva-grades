@@ -396,7 +396,7 @@ input {
     position: absolute;
     height: 70px;
     left: 1010px;
-    right: 102px;
+    right: 50px;
     top: 230px;
 
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
@@ -440,4 +440,8 @@ input {
     font-style: normal;
     font-weight: bold;
     font-size: 18px;
+    background: #0D78BE; 
+    color:white;
+    margin: 5px;
+    border-radius: 10px;
 }
