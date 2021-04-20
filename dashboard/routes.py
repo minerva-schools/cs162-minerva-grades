@@ -26,12 +26,12 @@ def login():
 
             user = User(user_id=form.sessionID.data)
 
-            print(user)
+            #print(user)
             # checks if user is already in database
             if User.query.filter_by(user_id=form.sessionID.data).first() != None:
                 login_user(user)
                 flash(f'Hi, you have been logged in.', 'success')
-                print("old user")
+                #print("old user")
 
                 return redirect(url_for('dashboard'))
 
@@ -49,7 +49,7 @@ def login():
 
                 db.session.commit()
                 login_user(user)
-                print("new user")
+                #print("new user")
 
                 flash(f'Hi, you have been logged in.', 'success')
                 return redirect(url_for('dashboard'))
@@ -125,7 +125,7 @@ def logout():
 
     # delete user after logout
     user = User.query.filter_by(user_id=current_user.get_id()).first()
-    print(user)
+    #print(user)
     db.session.delete(user)
     db.session.commit()
     logout_user()

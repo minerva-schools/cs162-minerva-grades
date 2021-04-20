@@ -1,9 +1,6 @@
 html {
-		scroll-behavior: auto;
-    height: auto !important;
-    overflow-y: visible !important;
-	}
-
+  scroll-behavior: smooth;
+}
 
 .cover {
   width: 100%;
@@ -14,7 +11,7 @@ html {
 .left {
   float: left;
   width: 40%;
-  height: 100vh;
+  height: 800px;
 }
 
 /* Minerva Grades */
@@ -50,10 +47,8 @@ html {
   font-family: Roboto;
   font-style: normal;
   font-weight: normal;
-  font-size: 18px;
-  line-height: 21px;
+  font-size: 17px;
   /* identical to box height */
-  color: rgba(0, 0, 0, 0.6);
 }
 
 .sessionid-container {
@@ -121,7 +116,7 @@ input[type="submit"] {
   /* Right 6 */
   float: right;
   width: 60%;
-  height: 100vh;
+  height: 800px;
   background: #f0871d;
 }
 
@@ -164,5 +159,16 @@ input[type="submit"] {
 }
 
 .main {
-  padding-top: 800px;
+  padding: 800px 20rem;
+  font-family: Roboto;
+  font-style: normal;
+  font-size: 18px;
+  line-height: 27px;
+}
+
+.gif {
+  width: 100%;
+  text-align: center;
+  border: black 0.5px solid;
+
 }
