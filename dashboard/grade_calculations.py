@@ -212,6 +212,20 @@ def hc_grade_over_time(user_id, Courses):
     df.to_csv('transfer.csv')
     return df
 
+def calc_gpa(grade):
+    """Calculates GPA for a course based on its score
+    Input:
+    - A minerva course score (1-5)
+
+    Output:
+    - A tuple with the GPA score (e.g. 3.7 for A-) and letter grade (e.g. B+)
+    """
+    conversion = {4: (4, "A+"), 3.55: (4, "A"), 3.35: (3.7, "A-"), 3.15: (3.3, "B+"), 2.95: (3, "B"), 2.75: (2.7, "B-"),
+                  2.6: (2.3, "C+"), 2.5: (2, "C"), 2.25: (1.7, "C-"), 2: (1.3, "D"), 1: (1, "F")}
+    for threshold, letter_grade in conversion.items():
+        if grade >= threshold:
+            return letter_grade
+    raise ValueError("Grade is smaller than 1")
 
 def single_hc_wavg(user_id, HcName):
     """
