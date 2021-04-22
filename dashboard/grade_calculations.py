@@ -31,9 +31,9 @@ def co_grade_over_time(course):
     """
     This function calculates co_grade over time for a selected course
     Input:
-    course name
+    course name: string, eg. "CS110"
     Output:
-    - Dataframe with columns of dates and the respective co_grade
+    - Dataframe with columns of dates and the respective course grade
     """
     i = pd.read_sql(
         db.session.query(LoGrade.lo_id, Lo.co_id, Lo.course,
@@ -70,7 +70,5 @@ def Co_grade_query():
                                        Lo_grades_query.c.term,
                                        func.round((func.avg(Lo_grades_query.c.cograde)), 2).label('cograde')).group_by(
         Lo_grades_query.c.course)
-
-    print(Co_grades_query)
 
     return Co_grades_query

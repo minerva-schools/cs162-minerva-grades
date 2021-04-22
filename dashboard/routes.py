@@ -75,17 +75,17 @@ def hcs():
 @app.route("/courses", methods=['GET', 'POST'])
 @login_required
 def courses():
+    # specify parameters for the info table
+    title = "Course Info"
+    headings = ['Name', 'Major', 'Semester', 'Course Grade']
     Co_grades_query = grade_calculations.Co_grade_query().all()
 
-    title = "Course Info"
-    headings = ['Name', 'Major', 'Semester', 'Cograde']
-
+    # specify parameters for the dropdown list
     form = DropDownList()
     available_courses = db.session.query(Lo.course).distinct().all()
     # form the list of tuples for SelectField
     form.course.choices = [(i, available_courses[i][0]) for i in range(len(available_courses))]
     session['selected_course'] = None
-
 
     # get data from the selected field
     if request.method == 'POST':
