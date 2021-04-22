@@ -97,6 +97,7 @@ def co_grade_over_time(user_id, course):
     """
     This function calculates co_grade over time for a selected course
     Input:
+    user_id
     course name
     Output:
     - Dataframe with columns of dates and the respective co_grade
@@ -128,15 +129,39 @@ def Co_grade_query(user_id):
 
     # query co grades and add major information
     Co_grades_query = db.session.query(Lo_grades_query.c.course,
-                                       case([(Lo_grades_query.c.course.like('CS%'), 'Computational Science'),
-                                             (Lo_grades_query.c.course.like('SS%'), 'Social Science'),
-                                             (Lo_grades_query.c.course.like('AH%'), 'Arts & Humanities'),
-                                             (Lo_grades_query.c.course.like('NS%'), 'Natural Science')
-                                             ], else_='Business').label('major'),
-                                       Lo_grades_query.c.term,
-                                       func.round((func.avg(Lo_grades_query.c.cograde)), 2).label('cograde')).group_by(
-        Lo_grades_query.c.course)
-    print(Co_grades_query)
+                                       case([(Lo_grades_query.c.course.like('CS%'), 'CS'),
+                                             (Lo_grades_query.c.course.like('SS%'), 'SS'),
+                                             (Lo_grades_query.c.course.like('AH%'), 'AH'),
+                                             (Lo_grades_query.c.course.like('NS%'), 'NS')
+                                             ], else_='BS').label('major'),
+                                       case([(Lo_grades_query.c.term.like('13'), 'Fall 2016'),
+                                             (Lo_grades_query.c.term.like('14'), 'Spring 2017'),
+                                             (Lo_grades_query.c.term.like('15'), 'Fall 2017'),
+                                             (Lo_grades_query.c.term.like('16'), 'Spring 2018'),
+                                             (Lo_grades_query.c.term.like('17'), 'Fall 2018'),
+                                             (Lo_grades_query.c.term.like('18'), 'Spring 2019'),
+                                             (Lo_grades_query.c.term.like('19'), 'Fall 2019'),
+                                             (Lo_grades_query.c.term.like('20'), 'Spring 2020'),
+                                             (Lo_grades_query.c.term.like('21'), 'Fall 2020'),
+                                             (Lo_grades_query.c.term.like('22'), 'Spring 2021'),
+                                             (Lo_grades_query.c.term.like('23'), 'Fall 2021'),
+                                             (Lo_grades_query.c.term.like('24'), 'Spring 2022')
+                                             ], else_=Lo_grades_query.c.term).label('term'),
+                                       func.round((func.avg(Lo_grades_query.c.cograde)), 2).label('cograde'),
+                                       case([(func.round((func.avg(Lo_grades_query.c.cograde)), 2) >= 4, 'A+'),
+                                            (func.round((func.avg(Lo_grades_query.c.cograde)), 2) >= 3.55, 'A'),
+                                            (func.round((func.avg(Lo_grades_query.c.cograde)), 2) >= 3.35, 'A-'),
+                                             (func.round((func.avg(Lo_grades_query.c.cograde)), 2) >= 3.15, 'B+'),
+                                             (func.round((func.avg(Lo_grades_query.c.cograde)), 2) >= 2.95, 'B'),
+                                             (func.round((func.avg(Lo_grades_query.c.cograde)), 2) >= 2.75, 'B-'),
+                                             (func.round((func.avg(Lo_grades_query.c.cograde)), 2) >= 2.6, 'C+'),
+                                             (func.round((func.avg(Lo_grades_query.c.cograde)), 2) >= 2.5, 'C'),
+                                             (func.round((func.avg(Lo_grades_query.c.cograde)), 2) >= 2.25, 'C-'),
+                                             (func.round((func.avg(Lo_grades_query.c.cograde)), 2) >= 2, 'D'),
+                                             (func.round((func.avg(Lo_grades_query.c.cograde)), 2) >= 1, 'F')], else_='None').label('Letter Grade')).group_by(Lo_grades_query.c.course)
+
+
+
     return Co_grades_query
 
 
