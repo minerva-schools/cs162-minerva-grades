@@ -18,36 +18,27 @@
     {{ title }}
 {%- endmacro %}
 
-{% macro info_table_headings(headings) -%}
-    <table>
+{% macro info_table_content(headings, data) -%}
+    <div class="table">
+    <table class="fixed_header">
         <thead>
-            <tr>
-                <th>{{ headings[0] }}</th>
-                <th>{{ headings[1] }}</th>
-                <th>{{ headings[2] }}</th>
-                <th>{{ headings[3] }}</th>
-            </tr>
+                <tr>
+                    {% for i in headings %}
+                    <th>{{ i }}</th>
+                    {% endfor %}
+                </tr>
         </thead>
-    </table>
-
-{%- endmacro %}
-
-{% macro info_table_data(data) -%}
-     <table>
         <tbody>
-        {% for user in data %}
-
+        {% for row in data %}
             <tr>
-                <td>{{ user.course }}</td>
-                <td>{{ user.major }}</td>
-                <td>{{ user.term }}</td>
-                <td>{{ user.cograde }}</td>
+            {% for column in row %}
+                <td>{{ column }}</td>
+            {% endfor %}
             </tr>
-
         {% endfor %}
         </tbody>
     </table>
-
+    </div>
 {%- endmacro %}
 
 {% macro info_table(title, headings, data) -%}
@@ -55,12 +46,7 @@
         <div class="table-title">
         {{ info_table_title(title) }}
         </div>
-        <div class="table-head">
-        {{ info_table_headings(headings) }}
-        </div>
-        <div class="table-body">
-        {{ info_table_data(data) }}
-        </div>
+        {{ info_table_content(headings, data) }}
     </div>
 {%- endmacro %}
 
