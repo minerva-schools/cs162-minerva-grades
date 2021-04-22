@@ -100,10 +100,10 @@ def hcs():
 @login_required
 def courses():
     session_id = os.environ.get("SESSION_ID")
-    Co_grades_query = grade_calculations.Co_grade_query(session_id).all()
+    Co_grades_query = grade_calculations.Co_grade_query(user_id=session_id).all()
 
     title = "Course Info"
-    headings = ['Name', 'Major', 'Semester', 'Cograde']
+    headings = ['Name', 'Major', 'Semester', 'Course Grade', 'Letter Grade']
 
     form = DropDownList()
     available_courses = db.session.query(Lo.course).filter_by(user_id=session_id).distinct().all()
