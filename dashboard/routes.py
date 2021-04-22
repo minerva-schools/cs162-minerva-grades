@@ -10,6 +10,7 @@ from sqlalchemy import Float
 from dashboard import grade_calculations
 
 import pandas as pd
+import os
 from altair import Chart, X, Y, Axis, Data, DataFormat, Scale
 
 
@@ -21,6 +22,7 @@ def login():
 
     form = LoginForm()
     if form.validate_on_submit():
+        os.environ['SESSION_ID'] = form.sessionID.data
 
         try:
 
@@ -69,23 +71,46 @@ def dashboard():
 @app.route("/hcs")
 @login_required
 def hcs():
-    return render_template('hcs.html')
+    session_id = os.environ.get("SESSION_ID")
+    # query HC grades
+    Hc_grades_query = db.session.query(
+        HcGrade.time, Hc.course, Hc.name, HcGrade.weight, HcGrade.assignment,
+        (cast(func.sum(HcGrade.score * HcGrade.weight), Float) / cast(func.sum(HcGrade.weight), Float)).label("hcgrade")
+    ).filter_by(user_id=session_id).join(Hc, Hc.hc_id == HcGrade.hc_id).group_by(Hc.hc_id).subquery("Hc_grades_query")
+
+
+    # query course grades and add major information
+    Course_grades_query = db.session.query(Hc_grades_query.c.time.label('Date'),
+                                           Hc_grades_query.c.course,
+                                           case([(Hc_grades_query.c.course.like('MC%'), 'Multimodal Communication'),
+                                                 (Hc_grades_query.c.course.like('FA%'), 'Formal Analyses'),
+                                                 (Hc_grades_query.c.course.like('EA%'), 'Empirical Analyses')],
+                                                else_='Complex Systems').label('Courses'),
+                                           Hc_grades_query.c.assignment,
+                                           func.round((func.avg(Hc_grades_query.c.hcgrade)), 2).label('coursegrade')).group_by(
+        Hc_grades_query.c.course).all()
+
+    title = "HC Applications"
+    headings = ['Date', 'Courses', 'Assignment', 'Weight']
+
+    return render_template('hcs.html', title=title, headings=headings, data=Course_grades_query)
 
 
 @app.route("/courses", methods=['GET', 'POST'])
 @login_required
 def courses():
-    # specify parameters for the info table
-    title = "Course Info"
-    headings = ['Name', 'Major', 'Semester', 'Course Grade']
-    Co_grades_query = grade_calculations.Co_grade_query().all()
+    session_id = os.environ.get("SESSION_ID")
+    Co_grades_query = grade_calculations.Co_grade_query(session_id).all()
 
-    # specify parameters for the dropdown list
+    title = "Course Info"
+    headings = ['Name', 'Major', 'Semester', 'Cograde']
+
     form = DropDownList()
-    available_courses = db.session.query(Lo.course).distinct().all()
+    available_courses = db.session.query(Lo.course).filter_by(user_id=session_id).distinct().all()
     # form the list of tuples for SelectField
     form.course.choices = [(i, available_courses[i][0]) for i in range(len(available_courses))]
     session['selected_course'] = None
+
 
     # get data from the selected field
     if request.method == 'POST':
@@ -125,7 +150,7 @@ def logout():
 
     # delete user after logout
     user = User.query.filter_by(user_id=current_user.get_id()).first()
-    print(user)
+    #print(user)
     db.session.delete(user)
     db.session.commit()
     logout_user()
