@@ -2,17 +2,21 @@ from dashboard import app, db
 from dashboard.models import User, Lo, LoGrade, Hc, HcGrade
 from dashboard import grade_calculations
 from flask.globals import session
+from datetime import datetime
 
 import pandas as pd
+import os
 import altair as alt
-from altair import Chart, X, Y, Axis, Data, DataFormat,Scale
+from altair import Chart, X, Y, Axis, Data, DataFormat, Scale
+from functools import reduce
 
 @app.route("/courses/cg")
 def course_grade():
+    session_id = os.environ.get("SESSION_ID")
     selected_course = session.get('selected_course', None)
     # show all course grades if haven't selected course from dropdown
     if selected_course == None:
-        source = pd.read_sql(grade_calculations.Co_grade_query().statement,db.session.bind)
+        source = pd.read_sql(grade_calculations.Co_grade_query(session_id).statement, db.session.bind)
 
         # make chart here
         chart = Chart(
@@ -26,7 +30,7 @@ def course_grade():
         return chart.to_json()
     else:
         # show individual course trend for the selected course from dropdown list
-        source = grade_calculations.co_grade_over_time(selected_course)
+        source = grade_calculations.co_grade_over_time(session_id, selected_course)
 
         # make interactive chart
         # Create a selection that chooses the nearest point & selects based on x-value
