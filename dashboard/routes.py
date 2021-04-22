@@ -13,7 +13,10 @@ import pandas as pd
 from altair import Chart, X, Y, Axis, Data, DataFormat, Scale
 
 
-@app.route("/", methods=['GET', 'POST'])
+@app.route("/")
+def home():
+    return redirect(url_for('login'))
+
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
