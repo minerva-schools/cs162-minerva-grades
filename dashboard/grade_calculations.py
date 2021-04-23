@@ -258,7 +258,6 @@ def hc_grade_over_time(user_id, Courses):
         result.append([date, hc_grade, transfer_grade])
 
     df = pd.DataFrame(result, columns=['Date', '{0}'.format(Courses), '{0} Transfer'.format(Courses)])
-    df.to_csv('transfer.csv')
     return df
 
 
