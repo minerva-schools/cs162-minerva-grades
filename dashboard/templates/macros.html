@@ -50,6 +50,40 @@
     </div>
 {%- endmacro %}
 
+{% macro info_table_content_hc(headings, data) -%}
+    <div class="table">
+    <table class="fixed_header">
+        <thead>
+                <tr>
+                    <th class="header_name">{{ headings[0] }}</th>
+                    <th>{{ headings[1] }}</th>
+                    <th>{{ headings[2] }}</th>
+                    <th>{{ headings[3] }}</th>
+                </tr>
+        </thead>
+        <tbody>
+        {% for user in data %}
+            <tr>
+                <td><a href="/{{user.name}}"> #{{ user.name }} </a></td>
+                <td>{{ user.Courses }}</td>
+                <td>{{ user.hcgrade }}</td>
+                <td>{{ user.transfer }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+{%- endmacro %}
+
+{% macro info_table_hc(title, headings, data) -%}
+    <div class="additional-info">
+        <div class="table-title">
+        {{ info_table_title(title) }}
+        </div>
+        {{ info_table_content_hc(headings, data) }}
+    </div>
+{%- endmacro %}
+
 <!-- Course selection dropdown -->
 {% macro dropdown_list(variable) %}
     <div class="select-frame">
