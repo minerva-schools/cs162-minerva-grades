@@ -165,6 +165,30 @@ def Co_grade_query(user_id):
     return Co_grades_query
 
 
+def Hc_grade_query(user_id, course=None):
+    # query HC grades
+    if course:
+        Hc_grades_query = db.session.query(
+            HcGrade.time, Hc.course, Hc.name, HcGrade.weight, HcGrade.transfer,
+            func.round((cast(func.sum(HcGrade.score * HcGrade.weight), Float) / cast(func.sum(HcGrade.weight), Float)), 2).label("hcgrade")
+        ).filter_by(user_id=user_id).filter(Hc.course == course).join(Hc, Hc.hc_id == HcGrade.hc_id).group_by(Hc.hc_id).subquery("Hc_grades_query")
+    else:
+        Hc_grades_query = db.session.query(
+            HcGrade.time, Hc.course, Hc.name, HcGrade.weight, HcGrade.transfer,
+            func.round((cast(func.sum(HcGrade.score * HcGrade.weight), Float) / cast(func.sum(HcGrade.weight), Float)),
+                       2).label("hcgrade")
+        ).filter_by(user_id=user_id).join(Hc, Hc.hc_id == HcGrade.hc_id).group_by(
+            Hc.hc_id).subquery("Hc_grades_query")
+
+    # add major information
+    Course_grades_query = db.session.query(Hc_grades_query.c.name,
+                                           Hc_grades_query.c.weight,
+                                           Hc_grades_query.c.course.label('Courses'),
+                                           Hc_grades_query.c.hcgrade,
+                                           Hc_grades_query.c.transfer)
+    #print(Course_grades_query)
+    return Course_grades_query
+
 def calc_hc_grade(i):
     """
     This function calculates hc_grade
@@ -234,8 +258,8 @@ def hc_grade_over_time(user_id, Courses):
         result.append([date, hc_grade, transfer_grade])
 
     df = pd.DataFrame(result, columns=['Date', '{0}'.format(Courses), '{0} Transfer'.format(Courses)])
-    df.to_csv('transfer.csv')
     return df
+
 
 def calc_gpa(grade):
     """Calculates GPA for a course based on its score
@@ -251,6 +275,7 @@ def calc_gpa(grade):
         if grade >= threshold:
             return letter_grade
     raise ValueError("Grade is smaller than 1")
+
 
 def single_hc_wavg(user_id, HcName):
     """

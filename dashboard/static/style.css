@@ -317,6 +317,10 @@ input {
     padding-right:17px;
 }
 
+th.header_name, {
+  width: 85%;
+}
+
 /* set properties of the display table*/
 .fixed_header {
     width: 98%;
@@ -410,7 +414,6 @@ input {
 
 
 }
-
 
 .select-frame {
     position: absolute;
