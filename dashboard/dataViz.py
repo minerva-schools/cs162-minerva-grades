@@ -16,7 +16,7 @@ def course_grade():
     selected_course = session.get('selected_course', None)
     # show all course grades if haven't selected course from dropdown
     if selected_course == None:
-        source = pd.read_sql(grade_calculations.Co_grade_query(session_id).statement, db.session.bind)
+        source = pd.read_sql(grade_calculations.Co_grade_query(user_id=session_id).statement, db.session.bind)
 
         # make chart here
         chart = Chart(
@@ -30,7 +30,7 @@ def course_grade():
         return chart.to_json()
     else:
         # show individual course trend for the selected course from dropdown list
-        source = grade_calculations.co_grade_over_time(session_id, selected_course)
+        source = grade_calculations.co_grade_over_time(user_id=session_id, course=selected_course)
 
         # make interactive chart
         # Create a selection that chooses the nearest point & selects based on x-value
