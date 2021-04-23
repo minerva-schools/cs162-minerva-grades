@@ -22,6 +22,7 @@
     <table>
         <thead>
             <tr>
+                <th> &nbsp; </th>
                 <th>{{ headings[0] }}</th>
                 <th>{{ headings[1] }}</th>
                 <th>{{ headings[2] }}</th>
@@ -50,6 +51,24 @@
 
 {%- endmacro %}
 
+{% macro info_table_data_hc(data) -%}
+     <table>
+        <tbody>
+        {% for user in data %}
+
+            <tr>
+                <td><a href="/{{user.name}}"> #{{ user.name }} </a></td>
+                <td>{{ user.Courses }}</td>
+                <td>{{ user.hcgrade }}</td>
+                <td>{{ user.transfer }}</td>
+            </tr>
+
+        {% endfor %}
+        </tbody>
+    </table>
+
+{%- endmacro %}
+
 {% macro info_table(title, headings, data) -%}
     <div class="additional-info">
         <div class="table-title">
@@ -60,6 +79,20 @@
         </div>
         <div class="table-body">
         {{ info_table_data(data) }}
+        </div>
+    </div>
+{%- endmacro %}
+
+{% macro info_table_hc(title, headings, data) -%}
+    <div class="additional-info">
+        <div class="table-title">
+        {{ info_table_title(title) }}
+        </div>
+        <div class="table-head">
+        {{ info_table_headings(headings) }}
+        </div>
+        <div class="table-body">
+        {{ info_table_data_hc(data) }}
         </div>
     </div>
 {%- endmacro %}
@@ -79,6 +112,35 @@
     </div>
 {%- endmacro %}
 
-<!-- Timeline selection dropdown -->
+<!-- JS Click Event Listener -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="{{
+  url_for('static', filename='jquery.js') }}">\x3C/script>')</script>
 
+<script type=text/javascript>
+    $(document).ready(function() {
+
+    $('#example tr').click(function() {
+        var href = $(this).find("a").attr("href");
+        if(href) {
+            window.location = href;
+        }
+    });
+});
+</script>
+
+<!-- HC selection dropdown -->
+{% macro dropdown_list_HC(variable) %}
+    <div class="select-frame">
+        <div class="select-bound">
+            <form method="POST">
+                <div class="select-content">
+                    {{ form.csrf_token }}
+                    {{ variable }}
+                </div>
+                <input type="submit" value="Submit" class = "select-submit">
+            </form>
+        </div>
+    </div>
+{%- endmacro %}
 
