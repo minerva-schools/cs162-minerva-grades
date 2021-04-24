@@ -165,6 +165,12 @@ def Co_grade_query(user_id):
     return Co_grades_query
 
 
+def LO_for_course_grade_query(course):
+    LO_for_course = db.session.query(Lo.name, Lo.mean, Lo.description).filter(Lo.course==course)
+    print(LO_for_course)
+
+    return LO_for_course
+
 def Hc_grade_query(user_id, course=None):
     # query HC grades
     if course:
@@ -320,3 +326,4 @@ def single_hc_wavg(user_id, HcName):
     df = pd.DataFrame(result, columns=['Date', 'Weight', 'HCName', 'Forum Grade', 'Transfer Grade', 'Transfer Weight'])
 
     return df
+

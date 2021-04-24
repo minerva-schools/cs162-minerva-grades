@@ -15,90 +15,93 @@
 <!-- Display Filter Button -->
 <!-- Additonal Info Table -->
 {% macro info_table_title(title) -%}
-    {{ title }}
+{{ title }}
 {%- endmacro %}
 
 {% macro info_table_content(headings, data) -%}
-    <div class="table">
+<div class="table">
     <table class="fixed_header">
         <thead>
-                <tr>
-                    {% for i in headings %}
-                    <th>{{ i }}</th>
-                    {% endfor %}
-                </tr>
+            <tr>
+                {% for i in headings %}
+                <th>{{ i }}</th>
+                {% endfor %}
+            </tr>
         </thead>
         <tbody>
-        {% for row in data %}
+            {% for row in data %}
             <tr>
-            {% for column in row %}
+                {% for column in row %}
                 <td>{{ column }}</td>
-            {% endfor %}
+                {% endfor %}
             </tr>
-        {% endfor %}
+            {% endfor %}
         </tbody>
     </table>
-    </div>
+</div>
 {%- endmacro %}
 
 {% macro info_table(title, headings, data) -%}
-    <div class="additional-info">
-        <div class="table-title">
+<div class="additional-info">
+    <div class="table-title">
         {{ info_table_title(title) }}
-        </div>
-        {{ info_table_content(headings, data) }}
     </div>
+    {{ info_table_content(headings, data) }}
+</div>
 {%- endmacro %}
 
 {% macro info_table_content_hc(headings, data) -%}
-    <div class="table">
+<div class="table">
     <table class="fixed_header">
         <thead>
-                <tr>
-                    <th class="header_name">{{ headings[0] }}</th>
-                    <th>{{ headings[1] }}</th>
-                    <th>{{ headings[2] }}</th>
-                    <th>{{ headings[3] }}</th>
-                </tr>
+            <tr>
+                <th class="header_name">{{ headings[0] }}</th>
+                <th>{{ headings[1] }}</th>
+                <th>{{ headings[2] }}</th>
+                <th>{{ headings[3] }}</th>
+            </tr>
         </thead>
         <tbody>
-        {% for user in data %}
+            {% for user in data %}
             <tr>
                 <td><a href="/{{user.name}}"> #{{ user.name }} </a></td>
                 <td>{{ user.Courses }}</td>
                 <td>{{ user.hcgrade }}</td>
                 <td>{{ user.transfer }}</td>
             </tr>
-        {% endfor %}
+            {% endfor %}
         </tbody>
     </table>
-    </div>
+</div>
 {%- endmacro %}
 
 {% macro info_table_hc(title, headings, data) -%}
-    <div class="additional-info">
-        <div class="table-title">
+<div class="additional-info">
+    <div class="table-title">
         {{ info_table_title(title) }}
-        </div>
-        {{ info_table_content_hc(headings, data) }}
     </div>
+    {{ info_table_content_hc(headings, data) }}
+</div>
 {%- endmacro %}
 
 <!-- Course selection dropdown -->
 {% macro dropdown_list(variable) %}
-    <div class="select-frame">
-        <div class="select-bound">
-            <form method="POST">
-                <div class="select-content">
-                    {{ form.csrf_token }}
-                    {{ variable }}
-                </div>
-                <input type="submit" value="Submit" class = "select-submit">
-            </form>
-        </div>
+<div class="select-frame">
+    <div class="select-bound">
+        <form method="POST">
+            <div class="select-content">
+                {{ form.csrf_token }}
+                {{ variable }}
+            </div>
+            <input style="
+                background: #0D78BE; 
+                color:white;
+                margin: 5px;
+                border-radius: 10px;"
+                type="submit" value="Submit" class="select-submit">
+        </form>
     </div>
+</div>
 {%- endmacro %}
 
 <!-- Timeline selection dropdown -->
-
-
