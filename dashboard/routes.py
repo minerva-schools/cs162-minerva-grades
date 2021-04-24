@@ -109,10 +109,6 @@ def singleHC(hc):
 @login_required
 def courses():
     session_id = os.environ.get("SESSION_ID")
-    Co_grades_query = grade_calculations.Co_grade_query(user_id=session_id).all()
-
-    title = "Course Info"
-    headings = ['Name', 'Major', 'Semester', 'Course Grade', 'Letter Grade']
 
     form = DropDownList()
     available_courses = db.session.query(Lo.course).filter_by(user_id=session_id).distinct().all()
@@ -120,22 +116,21 @@ def courses():
     form.course.choices = [(i, available_courses[i][0]) for i in range(len(available_courses))]
     session['selected_course'] = None
 
-
-    # get data from the selected field
+    # get data from the selected field and render info for the specific course
     if request.method == 'POST':
         course_idx = int(form.course.data)
         course = available_courses[course_idx][0]
         session['selected_course'] = str(course)
-        return render_template('courses.html', title=title, headings=headings, data=Co_grades_query, form=form, course=course)
+        title_course = "LOs grade for " + course
+        headings_course = ["LO", "Mean", "Description"]
+        LO_grade_by_course = grade_calculations.LO_for_course_grade_query(course).all()
+        return render_template('courses.html', title=title_course, headings=headings_course, data=LO_grade_by_course, form=form, course=course, request_method="POST")
 
-    return render_template('courses.html', title=title, headings=headings, data=Co_grades_query, form=form, course='all')
-
-
-@app.route("/settings")
-@login_required
-def settings():
-    return render_template('settings.html')
-
+    # render for all course info
+    title = "Course Info"
+    headings = ['Name', 'Major', 'Semester', 'Course Grade', 'Letter Grade']
+    Co_grades_query = grade_calculations.Co_grade_query(user_id=session_id).all()
+    return render_template('courses.html', title=title, headings=headings, data=Co_grades_query, form=form, course='all', request_method="NONE")
 
 @app.route("/logout")
 def logout():

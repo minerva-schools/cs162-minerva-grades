@@ -61,26 +61,26 @@
                 </tr>
         </thead>
         <tbody>
-        {% for user in data %}
+            {% for user in data %}
             <tr>
                 <td><a href="/{{user.name}}"> #{{ user.name }} </a></td>
                 <td>{{ user.Courses }}</td>
                 <td>{{ user.hcgrade }}</td>
                 <td>{{ user.transfer }}</td>
             </tr>
-        {% endfor %}
+            {% endfor %}
         </tbody>
     </table>
-    </div>
+</div>
 {%- endmacro %}
 
 {% macro info_table_hc(title, headings, data) -%}
-    <div class="additional-info">
-        <div class="table-title">
+<div class="additional-info">
+    <div class="table-title">
         {{ info_table_title(title) }}
-        </div>
-        {{ info_table_content_hc(headings, data) }}
     </div>
+    {{ info_table_content_hc(headings, data) }}
+</div>
 {%- endmacro %}
 
 <!-- Course selection dropdown -->
@@ -93,7 +93,7 @@
                 {{ variable }}
             </div>
             <input style="
-                background: #0D78BE;
+                background: #0D78BE; 
                 color:white;
                 margin: 5px;
                 border-radius: 10px;"
