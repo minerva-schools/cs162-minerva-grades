@@ -254,6 +254,14 @@ li {
     top: 340px;
 }
 
+.historical_HC {
+    position: absolute;
+    height: 546px;
+    left: 318px;
+    right: 18px;
+    top: 340px;
+}
+
 .historical-sheet {
 
 
@@ -261,7 +269,7 @@ li {
     left: 0px;
     right: 0px;
     top: 0px;
-    bottom: 0px;
+    bottom: -620px;
 
     background: #FFFFFF;
     border: 1px solid rgba(13, 120, 190, 0.35);
@@ -358,6 +366,52 @@ th.header_name, {
 }
 
 .fixed_header th {
+    color: #9FA2B4;
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 19px;
+    letter-spacing: 0.2px;
+}
+
+/* set properties of the display table*/
+.fixed_header_hc {
+    width: 98%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    line-height: 90px;
+}
+
+.fixed_header_hc tbody{
+    display:block;
+    width: 100%;
+    overflow: scroll;
+    height: 1000px;
+}
+
+.fixed_header_hc thead tr {
+    display: block;
+}
+
+.fixed_header_hc th, .fixed_header_hc td {
+    padding: 5px;
+    text-align: left;
+    width: 400px;
+}
+
+.fixed_header_hc td {
+    line-height: 60px;
+    overflow-y:scroll;
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+
+    letter-spacing: 0.2px;
+}
+
+.fixed_header_hc th {
     color: #9FA2B4;
     font-family: Open Sans;
     font-style: normal;
