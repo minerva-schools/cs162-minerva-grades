@@ -108,6 +108,8 @@ def singleHC(hc):
 @app.route("/courses", methods=['GET', 'POST'])
 @login_required
 def courses():
+    session_id = os.environ.get("SESSION_ID")
+
     form = DropDownList()
     available_courses = db.session.query(Lo.course).filter_by(user_id=session_id).distinct().all()
     # form the list of tuples for SelectField
@@ -126,8 +128,8 @@ def courses():
 
     # render for all course info
     title = "Course Info"
-    headings = ['Name', 'Major', 'Semester', 'Course Grade']
-    Co_grades_query = grade_calculations.Co_grade_query().all()
+    headings = ['Name', 'Major', 'Semester', 'Course Grade', 'Letter Grade']
+    Co_grades_query = grade_calculations.Co_grade_query(user_id=session_id).all()
     return render_template('courses.html', title=title, headings=headings, data=Co_grades_query, form=form, course='all', request_method="NONE")
 
 @app.route("/logout")
