@@ -16,7 +16,9 @@
     <!-- Chart Libraries + Styles -->
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js">script></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js">
+        script >
+    </script>
     <script src="https://d3js.org/d3.v3.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vega@4"></script>
     <script src="https://cdn.jsdelivr.net/npm/vega-lite@3.0.0-rc12"></script>
@@ -27,17 +29,21 @@
 
     <!-- Javascript for rendering charts -->
     <script type="text/javascript">
-    function parse(url, div) {
-        var opt = {
-        mode: "vega-lite",
-        renderer: "svg",
-        actions: {export: true, source: false, editor: false}
-        };
-        vegaEmbed("#"+div, url, opt, function(error, result) {
-        // result.view is the Vega View, url is the original Vega-Lite specification
-        vegaTooltip.vegaLite(result.view, url);
-        });
-    }
+        function parse(url, div) {
+            var opt = {
+                mode: "vega-lite",
+                renderer: "svg",
+                actions: {
+                    export: true,
+                    source: false,
+                    editor: false
+                }
+            };
+            vegaEmbed("#" + div, url, opt, function(error, result) {
+                // result.view is the Vega View, url is the original Vega-Lite specification
+                vegaTooltip.vegaLite(result.view, url);
+            });
+        }
     </script>
 </head>
 
@@ -45,17 +51,13 @@
     {% block body %}
     <!-- set the top blank space -->
     <div class='top-container'>
-    <!-- login message -->
-    <div class="col-md-8">
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-            {% for category, message in messages %}
-                <div class="alert alert-{{ category }}">
+        <!-- login message -->
+        <div class="col-md-8">
+            {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %} {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">
                 {{ message }}
-                </div>
-            {% endfor %}
-            {% endif %}
-        {% endwith %}
+            </div>
+            {% endfor %} {% endif %} {% endwith %}
         </div>
 
     </div>
@@ -66,25 +68,12 @@
             <div class="logo">
                 Minerva Grades
             </div>
-            <!-- Section for search section-->
-            <div class="search-frame">
-                <div class="search-box">
-                    <!-- TODO: Need to figure out how search bar will be used to update its functionality-->
-                    <img class="search-btn" src="../static/images/search.svg" alt="search button">
-                    <input type="text" placeholder="Search Anything">
-                </div>
-                <!-- Section for avatar-->
-                <!-- TODO: Need to figure out if the profile photo from Forum will be fetch or will we use same photo for everyone?-->
-                <div class="avatar">
-                    <img class="toyface" src="../static/images/ToyFaces.png" alt="avatar-face">
-                </div>
-            </div>
+
         </div>
         <!-- set a container for all navigation items -->
         <div class="nav-item">
             <ul>
-                {{ nav_link( "dashboard", "Dashboard", "home-select.svg") }} {{ nav_link( "hcs", "HCs","chart.svg") }} {{ nav_link( "courses", "Courses","documents.svg") }} {{ nav_link( "settings", "Settings", "settings.svg") }} {{ nav_link( "logout", "Logout", "logout.svg")
-                }}
+                {{ nav_link( "dashboard", "Dashboard", "home-select.svg") }} {{ nav_link( "hcs", "HCs","chart.svg") }} {{ nav_link( "courses", "Courses","documents.svg") }} {{ nav_link( "logout", "Logout", "logout.svg") }}
             </ul>
         </div>
     </div>
@@ -113,13 +102,11 @@
             <div class="dataviz">
                 <p class="dataviz_title">{% block dataviz_title %} {% endblock%}</p>
                 <div class="full-graph">
-                    {% block dataviz %}
-                    {% endblock %}
+                    {% block dataviz %} {% endblock %}
                 </div>
             </div>
             <div class="additional-info">
-                {% block table_info%}
-                {% endblock %}
+                {% block table_info%} {% endblock %}
             </div>
         </div>
     </div>

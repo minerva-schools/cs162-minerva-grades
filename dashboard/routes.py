@@ -130,11 +130,6 @@ def courses():
     Co_grades_query = grade_calculations.Co_grade_query().all()
     return render_template('courses.html', title=title, headings=headings, data=Co_grades_query, form=form, course='all', request_method="NONE")
 
-@app.route("/settings")
-@login_required
-def settings():
-    return render_template('settings.html')
-
 @app.route("/logout")
 def logout():
     # empty database for particular user.
