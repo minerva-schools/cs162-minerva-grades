@@ -71,32 +71,38 @@ def dashboard():
     return render_template('dashboard.html')
 
 
-@app.route("/hcs")
+@app.route("/hcs", methods=['GET', 'POST'])
 @login_required
 def hcs():
     session_id = os.environ.get("SESSION_ID")
-    # query HC grades
-    Hc_grades_query = db.session.query(
-        HcGrade.time, Hc.course, Hc.name, HcGrade.weight, HcGrade.assignment,
-        (cast(func.sum(HcGrade.score * HcGrade.weight), Float) / cast(func.sum(HcGrade.weight), Float)).label("hcgrade")
-    ).filter_by(user_id=session_id).join(Hc, Hc.hc_id == HcGrade.hc_id).group_by(Hc.hc_id).subquery("Hc_grades_query")
-
-
-    # query course grades and add major information
-    Course_grades_query = db.session.query(Hc_grades_query.c.time.label('Date'),
-                                           Hc_grades_query.c.course,
-                                           case([(Hc_grades_query.c.course.like('MC%'), 'Multimodal Communication'),
-                                                 (Hc_grades_query.c.course.like('FA%'), 'Formal Analyses'),
-                                                 (Hc_grades_query.c.course.like('EA%'), 'Empirical Analyses')],
-                                                else_='Complex Systems').label('Courses'),
-                                           Hc_grades_query.c.assignment,
-                                           func.round((func.avg(Hc_grades_query.c.hcgrade)), 2).label('coursegrade')).group_by(
-        Hc_grades_query.c.course).all()
+    Course_grades_query = grade_calculations.Hc_grade_query(session_id).all()
 
     title = "HC Applications"
-    headings = ['Date', 'Courses', 'Assignment', 'Weight']
+    headings = ['Name', 'Courses', 'Grade', 'Transferred']
 
-    return render_template('hcs.html', title=title, headings=headings, data=Course_grades_query)
+    form = DropDownList()
+    available_courses = db.session.query(Hc.course).filter_by(user_id=session_id).distinct().all()
+    # form the list of tuples for SelectField
+    form.course.choices = [(i, available_courses[i][0]) for i in range(len(available_courses))]
+    session['selected_course'] = None
+
+    # get data from the selected field
+    if request.method == 'POST':
+        course_idx = int(form.course.data)
+        course = available_courses[course_idx][0]
+        session['selected_course'] = str(course)
+        Course_grades_query = grade_calculations.Hc_grade_query(session_id, session['selected_course']).all()
+        return render_template('hcs.html', title=title, headings=headings, data=Course_grades_query, form=form,
+                               course=course)
+
+    return render_template('hcs.html', title=title, headings=headings, data=Course_grades_query, form=form, course='All Cornerstone Courses')
+
+
+@app.route("/<hc>")
+@login_required
+def singleHC(hc):
+    os.environ['selected_hc'] = hc
+    return render_template('singleHC.html', data=hc)
 
 
 @app.route("/courses", methods=['GET', 'POST'])
