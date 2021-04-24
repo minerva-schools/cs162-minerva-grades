@@ -51,15 +51,14 @@
 {%- endmacro %}
 
 {% macro info_table_content_hc(headings, data) -%}
-<div class="table">
-    <table class="fixed_header">
+    <div class="table">
+    <table class="fixed_header_hc">
         <thead>
-            <tr>
-                <th class="header_name">{{ headings[0] }}</th>
-                <th>{{ headings[1] }}</th>
-                <th>{{ headings[2] }}</th>
-                <th>{{ headings[3] }}</th>
-            </tr>
+                <tr>
+                    {% for i in headings %}
+                        <th>{{ i }}</th>
+                    {% endfor %}
+                </tr>
         </thead>
         <tbody>
             {% for user in data %}
@@ -103,5 +102,3 @@
     </div>
 </div>
 {%- endmacro %}
-
-<!-- Timeline selection dropdown -->

@@ -87,12 +87,12 @@ def hc_grade():
     if selected_course == None:
         HcData = pd.read_sql(db.session.query(Hc).filter_by(user_id=session_id).statement, db.session.bind)
         final = Chart(
-            data=HcData, height=300, width=450).mark_bar().encode(
-            Y('mean:Q',
+            data=HcData, height=1000, width=390).mark_bar().encode(
+            X('mean:Q',
               axis=alt.Axis(title='HC Forum Score'),
               scale=Scale(domain=(0, 5))
               ),
-            X('name:N', axis=alt.Axis(title=None),),
+            Y('name:N', axis=alt.Axis(title=None), sort='-x'),
             color='course:N').interactive()
     else:
         # query data
