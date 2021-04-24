@@ -1,0 +1,33 @@
+{% from "macros.html" import nav_link with context %}
+{% from "macros.html" import info_table_hc with context %}
+{% extends "base.html" %}
+<!-- Add pages title-->
+{% block title %}Dashboard{% endblock %}
+<!-- Import all parent elements from base layout-->
+{% block body%} {{ super() }} {% endblock%}
+<!-- Addional content -->
+{% block content %}
+<!-- Add Dashboard greeting-->
+<!-- TODO: Query user name? -->
+<!-- set a container for the top left greetings -->
+<div class="top-nav">
+    <p class='greeting'> {% block greeting %} Single HC View {% endblock%} </p>
+</div>
+
+<!-- set a container for the whole bottom sheet -->
+<div class="historical">
+    <div class="historical-sheet">
+        <p class="dataviz_title">{% block dataviz_title %} HC Score for: #{{ data }} {% endblock%}</p>
+        <div class="full-graph">
+            {% block dataviz %}
+                <!-- generate course grade data viz -->
+                <script type="text/javascript">
+                    parse("/singleHC/{{data}}", "viz");
+                </script>
+                <div id="viz"></div>
+            {% endblock %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

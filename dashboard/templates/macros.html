@@ -18,57 +18,27 @@
 {{ title }}
 {%- endmacro %}
 
-{% macro info_table_headings(headings) -%}
-<table>
-    <thead>
-        {% if request_method == "POST" %}
-        <tr>
-            <th>{{ headings[0] }}</th>
-            <th>{{ headings[1] }}</th>
-            <th>{{ headings[2] }}</th>
-        </tr>
-        {% else %}
-        <tr>
-            <th>{{ headings[0] }}</th>
-            <th>{{ headings[1] }}</th>
-            <th>{{ headings[2] }}</th>
-            <th>{{ headings[3] }}</th>
-        </tr>
-        {% endif %}
-    </thead>
-</table>
-
-{%- endmacro %}
-
-{% macro info_table_data(data) -%}
-<table>
-    <tbody>
-        {% if request_method == "POST" %}
-            {% for Lo in data %} 
+{% macro info_table_content(headings, data) -%}
+<div class="table">
+    <table class="fixed_header">
+        <thead>
             <tr>
-                <td>{{ Lo.name }}</td>
-                <td>{{ Lo.mean }}</td>
-                <td>{{ Lo.description }}</td>
+                {% for i in headings %}
+                <th>{{ i }}</th>
+                {% endfor %}
             </tr>
-
-            {% endfor %}
-            
-        {% else %}
-            {% for user in data %}
-
+        </thead>
+        <tbody>
+            {% for row in data %}
             <tr>
-                <td>{{ user.course }}</td>
-                <td>{{ user.major }}</td>
-                <td>{{ user.term }}</td>
-                <td>{{ user.cograde }}</td>
+                {% for column in row %}
+                <td>{{ column }}</td>
+                {% endfor %}
             </tr>
-
             {% endfor %}
-
-        {% endif %}
-    </tbody>
-</table>
-
+        </tbody>
+    </table>
+</div>
 {%- endmacro %}
 
 {% macro info_table(title, headings, data) -%}
@@ -76,18 +46,47 @@
     <div class="table-title">
         {{ info_table_title(title) }}
     </div>
-    <div class="table-head">
-        {{ info_table_headings(headings) }}
+    {{ info_table_content(headings, data) }}
+</div>
+{%- endmacro %}
+
+{% macro info_table_content_hc(headings, data) -%}
+<div class="table">
+    <table class="fixed_header">
+        <thead>
+            <tr>
+                <th class="header_name">{{ headings[0] }}</th>
+                <th>{{ headings[1] }}</th>
+                <th>{{ headings[2] }}</th>
+                <th>{{ headings[3] }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in data %}
+            <tr>
+                <td><a href="/{{user.name}}"> #{{ user.name }} </a></td>
+                <td>{{ user.Courses }}</td>
+                <td>{{ user.hcgrade }}</td>
+                <td>{{ user.transfer }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{%- endmacro %}
+
+{% macro info_table_hc(title, headings, data) -%}
+<div class="additional-info">
+    <div class="table-title">
+        {{ info_table_title(title) }}
     </div>
-    <div class="table-body">
-        {{ info_table_data(data) }}
-    </div>
+    {{ info_table_content_hc(headings, data) }}
 </div>
 {%- endmacro %}
 
 <!-- Course selection dropdown -->
 {% macro dropdown_list(variable) %}
-<div class="select-frame" style="width: 250px;">
+<div class="select-frame">
     <div class="select-bound">
         <form method="POST">
             <div class="select-content">
@@ -98,7 +97,8 @@
                 background: #0D78BE; 
                 color:white;
                 margin: 5px;
-                border-radius: 10px;" type="submit" value="Submit" class="select-submit">
+                border-radius: 10px;"
+                type="submit" value="Submit" class="select-submit">
         </form>
     </div>
 </div>

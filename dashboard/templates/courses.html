@@ -3,16 +3,17 @@
 
 <head>
     <meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Minerva Grade - Dashboard</title>
-	
-	<!--Bootstrap Login Style-->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-	<!--Bootstrap Login Style-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Minerva Grade - Dashboard</title>
 
-	<link rel="stylesheet" type="text/css" href="style.css">
-	<!--Custom Font-->
-	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+    <!--Bootstrap Login Style-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <!--Bootstrap Login Style-->
+
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <!--Custom Font-->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
 
 </head>
 
@@ -51,14 +52,18 @@
                 {% endblock %}
             </div>
         </div>
+
         <!-- create course info table from macro -->
         {% block table_info%}
+
         {{ info_table(title, headings, data) }}
         {% endblock %}
     </div>
 
 
     {% endblock %}
+
+    </div>
 
 </body>
 

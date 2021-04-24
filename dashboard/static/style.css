@@ -311,26 +311,43 @@ input {
     width: 117px;
 }
 
-/* set properties of the display table heading*/
-.table-head{
-    padding-top: 119px;
+/* set properties of the display block*/
+.table {
+    padding-top:119px;
     padding-right:17px;
-    color: #9FA2B4;
-    font-family: Open Sans;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 14px;
-    line-height: 19px;
-    letter-spacing: 0.2px;
-    width:98%;
 }
 
-/* set properties of the display table body*/
-.table-body{
-    top: 154px;
-    width:98%;
-    height:394px;
-    line-height: 98px;
+th.header_name, {
+  width: 85%;
+}
+
+/* set properties of the display table*/
+.fixed_header {
+    width: 98%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    line-height: 90px;
+}
+
+.fixed_header tbody{
+    display:block;
+    width: 100%;
+    overflow: scroll;
+    height: 350px;
+}
+
+.fixed_header thead tr {
+    display: block;
+}
+
+.fixed_header th, .fixed_header td {
+    padding: 5px;
+    text-align: left;
+    width: 400px;
+}
+
+.fixed_header td {
+    line-height: 60px;
     overflow-y:scroll;
     font-family: Open Sans;
     font-style: normal;
@@ -340,9 +357,16 @@ input {
     letter-spacing: 0.2px;
 }
 
-.table-head table,.table-body table{width:100%;border-collapse: collapse;}
+.fixed_header th {
+    color: #9FA2B4;
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 19px;
+    letter-spacing: 0.2px;
+}
 
-.table-body table tr:nth-child(2n+1){background-color:#f2f2f2;}
 
 /* set properties of the display table title*/
 .dataviz_title {
@@ -373,7 +397,7 @@ input {
 
     position: absolute;
     height: 30px;
-    left: 23px;
+    left: 4px;
     right: 336px;
     top: 37px;
 
@@ -390,7 +414,6 @@ input {
 
 
 }
-
 
 .select-frame {
     position: absolute;

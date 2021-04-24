@@ -1,4 +1,7 @@
-{% from "macros.html" import nav_link with context %} {% extends "base.html" %}
+{% from "macros.html" import nav_link with context %}
+{% from "macros.html" import info_table_hc with context %}
+{% from "macros.html" import dropdown_list with context %}
+{% extends "base.html" %}
 <!-- Add pages title-->
 {% block title %}Dashboard{% endblock %}
 <!-- Import all parent elements from base layout-->
@@ -12,8 +15,28 @@
     <p class='greeting'> {% block greeting %} HCs Breakdown {% endblock%} </p>
 </div>
 
-    <script type="text/javascript">
-    parse("hcs/hc","hc");
-    </script>
-    <div id="hc"></div>
+<!-- create dropdown list from macro -->
+{{ dropdown_list(form.course) }}
+
+<!-- set a container for the whole bottom sheet -->
+<div class="historical">
+    <div class="historical-sheet">
+        <p class="dataviz_title">{% block dataviz_title %} Course Grade for: {{ course }} {% endblock%}</p>
+        <div class="full-graph">
+            {% block dataviz %}
+                <!-- generate course grade data viz -->
+                <script type="text/javascript">
+                    parse("/hcs/hcgrade","hcgrade");
+                </script>
+                <div id="hcgrade"></div>
+            {% endblock %}
+        </div>
+    </div>
+    <!-- create course info table from macro -->
+    {% block table_info%}
+        {{ info_table_hc(title, headings, data) }}
+    {% endblock %}
+</div>
+
+
 {% endblock %}

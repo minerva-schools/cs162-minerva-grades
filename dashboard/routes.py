@@ -10,10 +10,14 @@ from sqlalchemy import Float
 from dashboard import grade_calculations
 
 import pandas as pd
+import os
 from altair import Chart, X, Y, Axis, Data, DataFormat, Scale
 
 
-@app.route("/", methods=['GET', 'POST'])
+@app.route("/")
+def home():
+    return redirect(url_for('login'))
+
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
@@ -21,6 +25,7 @@ def login():
 
     form = LoginForm()
     if form.validate_on_submit():
+        os.environ['SESSION_ID'] = form.sessionID.data
 
         try:
 
@@ -66,18 +71,45 @@ def dashboard():
     return render_template('dashboard.html')
 
 
-@app.route("/hcs")
+@app.route("/hcs", methods=['GET', 'POST'])
 @login_required
 def hcs():
-    return render_template('hcs.html')
+    session_id = os.environ.get("SESSION_ID")
+    Course_grades_query = grade_calculations.Hc_grade_query(session_id).all()
+
+    title = "HC Applications"
+    headings = ['Name', 'Courses', 'Grade', 'Transferred']
+
+    form = DropDownList()
+    available_courses = db.session.query(Hc.course).filter_by(user_id=session_id).distinct().all()
+    # form the list of tuples for SelectField
+    form.course.choices = [(i, available_courses[i][0]) for i in range(len(available_courses))]
+    session['selected_course'] = None
+
+    # get data from the selected field
+    if request.method == 'POST':
+        course_idx = int(form.course.data)
+        course = available_courses[course_idx][0]
+        session['selected_course'] = str(course)
+        Course_grades_query = grade_calculations.Hc_grade_query(session_id, session['selected_course']).all()
+        return render_template('hcs.html', title=title, headings=headings, data=Course_grades_query, form=form,
+                               course=course)
+
+    return render_template('hcs.html', title=title, headings=headings, data=Course_grades_query, form=form, course='All Cornerstone Courses')
+
+
+@app.route("/<hc>")
+@login_required
+def singleHC(hc):
+    os.environ['selected_hc'] = hc
+    return render_template('singleHC.html', data=hc)
 
 
 @app.route("/courses", methods=['GET', 'POST'])
 @login_required
 def courses():
-    
     form = DropDownList()
-    available_courses = db.session.query(Lo.course).distinct().all()
+    available_courses = db.session.query(Lo.course).filter_by(user_id=session_id).distinct().all()
     # form the list of tuples for SelectField
     form.course.choices = [(i, available_courses[i][0]) for i in range(len(available_courses))]
     session['selected_course'] = None
@@ -125,7 +157,7 @@ def logout():
 
     # delete user after logout
     user = User.query.filter_by(user_id=current_user.get_id()).first()
-    print(user)
+    #print(user)
     db.session.delete(user)
     db.session.commit()
     logout_user()

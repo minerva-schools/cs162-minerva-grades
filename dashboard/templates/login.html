@@ -18,8 +18,34 @@
 	<script src="js/respond.min.js"></script>
 	<![endif]-->
 
+	<!--Smooth Scroll Jquery-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script>
+	$(document).ready(function(){
+		// Add smooth scrolling to all links
+		$("a").on('click', function(event) {
+
+			// Make sure this.hash has a value before overriding default behavior
+			if (this.hash !== "") {
+				// Prevent default anchor click behavior
+				event.preventDefault();
+
+				// Store hash
+				var hash = this.hash;
+
+				// Using jQuery's animate() method to add smooth page scroll
+				// The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
+				$('html, body').stop().animate({
+					scrollTop: $(hash).offset().top
+				}, 800, function(){
+
+				});
+			} // End if
+		});
+	});
+	</script>
+
 	<!--Loading Spinner Jquery-->
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 	<script>
     $(document).ready(function () {
 
@@ -38,7 +64,8 @@
 			<div class="title"> Minerva Grades </div>	
 			<div class="intro"> 
 				<p class="big-intro">A Grading Dashboard Tool for Minerva Students</p>
-				<p class="small-intro">Please enter your Session ID</p>
+				<a class="small-intro" href="#howTo">Click for instructions to find your Session ID!</a>
+
 			</div>
 
 			<div class="sessionid-container">
@@ -60,7 +87,6 @@
 									{{ form.sessionID(class="form-control form-control-lg") }}
 							{% endif %}
 						</div>
-						<a href="#">How to Find Your Session ID</a>
 					</fieldset>
 				
 					<div class="form-group" >
@@ -100,30 +126,58 @@
 	</div> 
 
 	<div class="main"> 
-		
-		<div id="about"></div>
-		<h1>About</h1>
-		
-		<p>Welcome to Minerva Grade. In this project, we want to bring more understanding to how grades at Minerva translate into GPA, 
-			what are your transfer scores and how to best take advantage of this information. Let us know if you have ideas on how our product can improve 
-			to best help you.
-		</p>
 
+
+		<div id="howTo"></div>
+		<div class="title" style="text-align: right;"> How to Find Your Session ID </div>	
+		Please follow the instructions below to retrieve your Session ID that is needed to view your personalised grades dashboard. Refer to the video further below if you're still stuck:
+		<br>
+		<br>
+		<ol>
+			<li>Make sure you're using Google Chrome.</li>
+			<li>If you haven't already logged into <a href="https://forum.minerva.kgi.edu/app" target="_blank">Forum</a> with your Minerva email, please log in.</li>
+			<li>View the site information, which is available on the left side of the address bar URL.</li>
+			<li>Click on Cookies -> forum.minerva.kgi.edu -> Cookies -> sessionid</li>
+			<li>Copy the content field. This is your Session ID.</li>
+			<li>Paste your Session ID into the Session ID field above and log in!</li>
+			<li>Wait a few minutes for the application to retrieve your grades. Yes, we know it takes a while. Don't look at us for the long waiting time!  We didn't design the Forum's API.</li>
+		</ol>		
+		<br>
+
+		<video controls autoplay class="gif">
+				<source src="../static/images/instruction.mov" type="video/mp4">
+		</video>
+		<br>
+		<br>
+
+		<hr>
+	
+		<div id="about"></div>
+		<div class="title" style="text-align: right;"> About </div>	
+		Everybody knows that nobody knows how grades at Minerva are calculated. Cornerstone course scores are made from HCs, HC transfer scores, and HC transfer scope, all of which are calculated in complex ways. Students' GPAs depend on a three-layer approach of LOs, COs, and the course grades. It is not easy for students to understand their GPA score or which HCs and LOs they should be thinking about applying. Students struggle to understand their grades and have a hard time taking actions to improve them. <br><br>
+
+		<b>Minerva Grades is a project created by CS162 students that strives to help Minerva students understand their grades!</b> Log into this application, and you'll find:
+		<br>
+		<br>
+		<ul>
+			<li>An estimate of your past and current GPA.</li>
+			<li>Letter grades for each of your courses.</li>
+			<li>Recommendations for applying HCs to boost your grade.</li>
+		</ul>	
+		<br>
+		<br>
+		
+		<hr>
  
 		<div id="contact"></div>
-		<h1>Contact</h1>
-		<p>
-			Our team:
-			<ul>
-				<li>Peleg Shilo</li>
-				<li>Tianhui Xu</li>
-				<li>Anqi Zhou</li>
-				<li>Jasen Lo </li>
-				<li>Nina Hamidli</li>
-				<li>Trang Doan</li>
-			</ul>
-		</p>
+		<div class="title" style="text-align: right;"> Contact </div>	
+		Please email. 
+		
+		Explicabo consequatur non ut quasi placeat illum sit minus et. Et omnis corrupti aliquam id minus. Enim consectetur officia illum natus et sed porro.
  
+		Non hic sunt voluptas odit minima assumenda explicabo qui aut. Voluptas et exercitationem ut explicabo culpa ut. Voluptatem omnis perferendis. Quisquam praesentium et odio sit in itaque. Et quidem omnis molestiae dolor odit ratione.
+ 
+		Aut esse unde saepe id saepe veniam iusto praesentium consectetur. Aut autem voluptas possimus qui dolorem saepe. Porro quasi tenetur adipisci maiores amet.
 
 	
 </body>
