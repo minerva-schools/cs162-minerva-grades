@@ -2,14 +2,10 @@ import unittest
 from dashboard import db
 from dashboard.models import Lo, LoGrade, Hc, HcGrade
 import pandas as pd
-from dotenv import load_dotenv
 from dashboard.grade_calculations import Co_grade_query, calc_course_grade, co_grade_over_time
 from sqlalchemy import cast, Float, func, case
 
 import datetime
-
-load_dotenv()
-
 
 class GradeCalculationTest(unittest.TestCase):
 
