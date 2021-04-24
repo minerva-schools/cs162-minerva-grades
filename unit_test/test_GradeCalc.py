@@ -1,5 +1,5 @@
 import unittest
-from dashboard import db
+from dashboard import db, app
 from dashboard.models import Lo, LoGrade, Hc, HcGrade
 import pandas as pd
 from dashboard.grade_calculations import Co_grade_query, calc_course_grade, co_grade_over_time
@@ -10,25 +10,26 @@ import datetime
 class GradeCalculationTest(unittest.TestCase):
 
     def setUp(self):
+        app.config.update(TESTING=True)
+        self.context = app.test_request_context()
+        self.context.push()
+        self.client = app.test_client()
+
         db.create_all()
+        db.session.commit()
+
         # add fictious data
         gradesample = [
-            (
-            1221103, 10097, 'gdl2tj4slgrsxy0n6rmd48ehlloys4to', 4, 1, datetime.datetime(2020, 9, 7, 14, 28, 34), False),
+            (1221103, 10097, 'gdl2tj4slgrsxy0n6rmd48ehlloys4to', 4, 1, datetime.datetime(2020, 9, 7, 14, 28, 34), False),
             (1221261, 9868, 'gdl2tj4slgrsxy0n6rmd48ehlloys4to', 4, 1, datetime.datetime(2020, 9, 8, 19, 7, 13), False),
             (1221459, 9870, 'gdl2tj4slgrsxy0n6rmd48ehlloys4to', 3, 1, datetime.datetime(2020, 9, 9, 14, 32, 24), False),
-            (
-            1221472, 10097, 'gdl2tj4slgrsxy0n6rmd48ehlloys4to', 4, 1, datetime.datetime(2020, 9, 9, 14, 59, 48), False),
-            (
-            1221834, 9867, 'gdl2tj4slgrsxy0n6rmd48ehlloys4to', 2, 1, datetime.datetime(2020, 9, 10, 17, 59, 27), False),
-            (1223894, 10097, 'gdl2tj4slgrsxy0n6rmd48ehlloys4to', 4, 1, datetime.datetime(2020, 9, 14, 19, 42, 18),
-             False),
+            (1221472, 10097, 'gdl2tj4slgrsxy0n6rmd48ehlloys4to', 4, 1, datetime.datetime(2020, 9, 9, 14, 59, 48), False),
+            (1221834, 9867, 'gdl2tj4slgrsxy0n6rmd48ehlloys4to', 2, 1, datetime.datetime(2020, 9, 10, 17, 59, 27), False),
+            (1223894, 10097, 'gdl2tj4slgrsxy0n6rmd48ehlloys4to', 4, 1, datetime.datetime(2020, 9, 14, 19, 42, 18), False),
             (1224478, 9863, 'gdl2tj4slgrsxy0n6rmd48ehlloys4to', 3, 1, datetime.datetime(2020, 9, 15, 19, 1, 49), False),
-            (
-            1225059, 9870, 'gdl2tj4slgrsxy0n6rmd48ehlloys4to', 3, 1, datetime.datetime(2020, 9, 16, 18, 25, 42), False),
+            (1225059, 9870, 'gdl2tj4slgrsxy0n6rmd48ehlloys4to', 3, 1, datetime.datetime(2020, 9, 16, 18, 25, 42), False),
             (1225673, 9868, 'gdl2tj4slgrsxy0n6rmd48ehlloys4to', 3, 1, datetime.datetime(2020, 9, 17, 21, 4, 55), False),
-            (
-            1226360, 9871, 'gdl2tj4slgrsxy0n6rmd48ehlloys4to', 3, 1, datetime.datetime(2020, 9, 18, 17, 48, 39), False),
+            (1226360, 9871, 'gdl2tj4slgrsxy0n6rmd48ehlloys4to', 3, 1, datetime.datetime(2020, 9, 18, 17, 48, 39), False),
             (1226983, 10097, 'gdl2tj4slgrsxy0n6rmd48ehlloys4to', 4, 2, datetime.datetime(2020, 9, 19, 16, 36, 6), True),
             (1227058, 10097, 'gdl2tj4slgrsxy0n6rmd48ehlloys4to', 4, 2, datetime.datetime(2020, 9, 19, 18, 0, 39), True),
             (1227071, 9947, 'gdl2tj4slgrsxy0n6rmd48ehlloys4to', 4, 1, datetime.datetime(2020, 9, 19, 18, 5, 17), False),
@@ -722,6 +723,7 @@ class GradeCalculationTest(unittest.TestCase):
             i = list(i)
             db.session.add(
                 LoGrade(grade_id=i[0], lo_id=i[1], user_id=i[2], score=i[3], weight=i[4], time=i[5], assignment=i[6]))
+            db.session.commit()
 
         # add to Lo table
         for i in gradesample2:
@@ -730,8 +732,7 @@ class GradeCalculationTest(unittest.TestCase):
                 Lo(lo_id=i[0], user_id=i[1], name=i[2], description=i[3], term=i[4], co_id=i[5], co_desc=i[6],
                    course=i[7],
                    mean=i[8]))
-
-        db.session.commit()
+            db.session.commit()
 
     def test_co_grade_over_time(self):
         # test the function of co_grade_over_time
@@ -762,3 +763,4 @@ class GradeCalculationTest(unittest.TestCase):
 
     def tearDown(self):
         db.drop_all()
+        self.context.pop()
