@@ -254,14 +254,6 @@ li {
     top: 340px;
 }
 
-.historical_HC {
-    position: absolute;
-    height: 546px;
-    left: 318px;
-    right: 18px;
-    top: 340px;
-}
-
 .historical-sheet {
 
 
@@ -269,7 +261,7 @@ li {
     left: 0px;
     right: 0px;
     top: 0px;
-    bottom: -620px;
+    bottom: 0px;
 
     background: #FFFFFF;
     border: 1px solid rgba(13, 120, 190, 0.35);
@@ -375,7 +367,7 @@ th.header_name, {
     letter-spacing: 0.2px;
 }
 
-/* set properties of the display table*/
+/* set properties of the HC display table*/
 .fixed_header_hc {
     width: 98%;
     table-layout: fixed;
@@ -473,7 +465,7 @@ th.header_name, {
     position: absolute;
     height: 70px;
     left: 1010px;
-    right: 102px;
+    right: 50px;
     top: 230px;
 
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
@@ -517,4 +509,8 @@ th.header_name, {
     font-style: normal;
     font-weight: bold;
     font-size: 18px;
+    background: #0D78BE;
+    color:white;
+    margin: 5px;
+    border-radius: 10px;
 }
