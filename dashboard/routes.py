@@ -131,11 +131,6 @@ def courses():
     return render_template('courses.html', title=title, headings=headings, data=Co_grades_query, form=form, course='all')
 
 
-@app.route("/settings")
-@login_required
-def settings():
-    return render_template('settings.html')
-
 
 @app.route("/logout")
 def logout():
