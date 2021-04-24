@@ -74,3 +74,9 @@ def Co_grade_query():
     print(Co_grades_query)
 
     return Co_grades_query
+
+def LO_for_course_grade_query(course):
+    LO_for_course = db.session.query(Lo.name, Lo.mean, Lo.description).filter(Lo.course==course)
+    print(LO_for_course)
+
+    return LO_for_course

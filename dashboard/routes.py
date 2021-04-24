@@ -75,27 +75,28 @@ def hcs():
 @app.route("/courses", methods=['GET', 'POST'])
 @login_required
 def courses():
-    Co_grades_query = grade_calculations.Co_grade_query().all()
-
-    title = "Course Info"
-    headings = ['Name', 'Major', 'Semester', 'Cograde']
-
+    
     form = DropDownList()
     available_courses = db.session.query(Lo.course).distinct().all()
     # form the list of tuples for SelectField
     form.course.choices = [(i, available_courses[i][0]) for i in range(len(available_courses))]
     session['selected_course'] = None
 
-
-    # get data from the selected field
+    # get data from the selected field and render info for the specific course
     if request.method == 'POST':
         course_idx = int(form.course.data)
         course = available_courses[course_idx][0]
         session['selected_course'] = str(course)
-        return render_template('courses.html', title=title, headings=headings, data=Co_grades_query, form=form, course=course)
+        title_course = "LOs grade for " + course
+        headings_course = ["LO", "Mean", "Description"]
+        LO_grade_by_course = grade_calculations.LO_for_course_grade_query(course).all()
+        return render_template('courses.html', title=title_course, headings=headings_course, data=LO_grade_by_course, form=form, course=course, request_method="POST")
 
-    return render_template('courses.html', title=title, headings=headings, data=Co_grades_query, form=form, course='all')
-
+    # render for all course info
+    title = "Course Info"
+    headings = ['Name', 'Major', 'Semester', 'Course Grade']
+    Co_grades_query = grade_calculations.Co_grade_query().all()
+    return render_template('courses.html', title=title, headings=headings, data=Co_grades_query, form=form, course='all', request_method="NONE")
 
 @app.route("/settings")
 @login_required

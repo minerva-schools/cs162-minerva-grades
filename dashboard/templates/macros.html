@@ -21,12 +21,20 @@
 {% macro info_table_headings(headings) -%}
 <table>
     <thead>
+        {% if request_method == "POST" %}
+        <tr>
+            <th>{{ headings[0] }}</th>
+            <th>{{ headings[1] }}</th>
+            <th>{{ headings[2] }}</th>
+        </tr>
+        {% else %}
         <tr>
             <th>{{ headings[0] }}</th>
             <th>{{ headings[1] }}</th>
             <th>{{ headings[2] }}</th>
             <th>{{ headings[3] }}</th>
         </tr>
+        {% endif %}
     </thead>
 </table>
 
@@ -35,16 +43,29 @@
 {% macro info_table_data(data) -%}
 <table>
     <tbody>
-        {% for user in data %}
+        {% if request_method == "POST" %}
+            {% for Lo in data %} 
+            <tr>
+                <td>{{ Lo.name }}</td>
+                <td>{{ Lo.mean }}</td>
+                <td>{{ Lo.description }}</td>
+            </tr>
 
-        <tr>
-            <td>{{ user.course }}</td>
-            <td>{{ user.major }}</td>
-            <td>{{ user.term }}</td>
-            <td>{{ user.cograde }}</td>
-        </tr>
+            {% endfor %}
+            
+        {% else %}
+            {% for user in data %}
 
-        {% endfor %}
+            <tr>
+                <td>{{ user.course }}</td>
+                <td>{{ user.major }}</td>
+                <td>{{ user.term }}</td>
+                <td>{{ user.cograde }}</td>
+            </tr>
+
+            {% endfor %}
+
+        {% endif %}
     </tbody>
 </table>
 
