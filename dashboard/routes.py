@@ -11,7 +11,6 @@ from dashboard import grade_calculations
 
 import pandas as pd
 import os
-from altair import Chart, X, Y, Axis, Data, DataFormat, Scale
 
 
 @app.route("/")
@@ -21,7 +20,7 @@ def home():
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('dashboard'))
+        return redirect(url_for('hcs'))
 
     form = LoginForm()
     if form.validate_on_submit():
@@ -31,14 +30,12 @@ def login():
 
             user = User(user_id=form.sessionID.data)
 
-            print(user)
             # checks if user is already in database
             if User.query.filter_by(user_id=form.sessionID.data).first() != None:
                 login_user(user)
                 flash(f'Hi, you have been logged in.', 'success')
-                print("old user")
 
-                return redirect(url_for('dashboard'))
+                return redirect(url_for('hcs'))
 
             # if not, add user to db and call forum fetcher
             else:
@@ -54,21 +51,15 @@ def login():
 
                 db.session.commit()
                 login_user(user)
-                print("new user")
 
                 flash(f'Hi, you have been logged in.', 'success')
-                return redirect(url_for('dashboard'))
+                return redirect(url_for('hcs'))
         except:
             flash('Login unsuccessful. Please check Session ID.', 'danger')
             db.session.rollback()
 
     return render_template('login.html', title='Welcome', form=form)
 
-
-@app.route("/dashboard")
-@login_required
-def dashboard():
-    return render_template('dashboard.html')
 
 
 @app.route("/hcs", methods=['GET', 'POST'])

@@ -2,8 +2,12 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
 <head>
     <meta charset="utf-8">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎯</text></svg>">
+
+
     <title>{% block title%}Default title{% endblock title %}</title>
     <!-- Add any needed scripts needed for each page -->
     {% block head_scripts %} {% endblock %}
@@ -45,6 +49,7 @@
             });
         }
     </script>
+
 </head>
 
 <body>
@@ -73,8 +78,13 @@
         <!-- set a container for all navigation items -->
         <div class="nav-item">
             <ul>
-                {{ nav_link( "dashboard", "Dashboard", "home-select.svg") }} {{ nav_link( "hcs", "HCs","chart.svg") }} {{ nav_link( "courses", "Courses","documents.svg") }} {{ nav_link( "logout", "Logout", "logout.svg") }}
+                {{ nav_link( "hcs", "HCs","chart.svg") }} {{ nav_link( "courses", "Courses","documents.svg") }} {{ nav_link( "logout", "Logout", "logout.svg") }}
             </ul>
+        </div>
+        <div class="hover-note">
+            <hr>
+            Use the menu above to toggle between viewing your HC and LO course grades. <br><br>
+            Refresh your grades by logging out and in again!
         </div>
     </div>
 
@@ -82,13 +92,6 @@
     <div class="Line1">
     </div>
 
-    <!-- set a container for the middle right help section -->
-    <div class="help-button">
-        <img class="help-button-out" src="../static/images/_.svg" alt="help-button-out">
-        <img class="help-button-in" src="../static/images/Ellipse1.svg" alt="help-button-in">
-        <!--TODO: will we have another Help page? Or will it be just modal dialog (pop-up info)? -->
-        <a id="help-link" href="#">Help</a>
-    </div>
     {% endblock %}
     <!-- Additional personalized content place for each page-->
     {% block content %}

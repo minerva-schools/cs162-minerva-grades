@@ -2,7 +2,7 @@
 {% from "macros.html" import info_table_hc with context %}
 {% extends "base.html" %}
 <!-- Add pages title-->
-{% block title %}Dashboard{% endblock %}
+{% block title %}Minerva Grade - Dashboard{% endblock %}
 <!-- Import all parent elements from base layout-->
 {% block body%} {{ super() }} {% endblock%}
 <!-- Addional content -->
@@ -12,6 +12,10 @@
 <!-- set a container for the top left greetings -->
 <div class="top-nav">
     <p class='greeting'> {% block greeting %} Single HC View {% endblock%} </p>
+</div>
+
+<div class = "description">
+    This page shows your HC grade over time for this selected HC. <span style="color: blue;">Forum grade</span> is the HC grade discounting the <span style="color: orange;">transfer grade</span>.
 </div>
 
 <!-- set a container for the whole bottom sheet -->

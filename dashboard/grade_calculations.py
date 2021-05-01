@@ -132,8 +132,10 @@ def Co_grade_query(user_id):
                                        case([(Lo_grades_query.c.course.like('CS%'), 'CS'),
                                              (Lo_grades_query.c.course.like('SS%'), 'SS'),
                                              (Lo_grades_query.c.course.like('AH%'), 'AH'),
-                                             (Lo_grades_query.c.course.like('NS%'), 'NS')
-                                             ], else_='BS').label('major'),
+                                             (Lo_grades_query.c.course.like('NS%'), 'NS'),
+                                             (Lo_grades_query.c.course.like('BS%'), 'BS'),
+                                             (Lo_grades_query.c.course.like('CP%'), 'CP')
+                                             ], else_='IL').label('major'),
                                        case([(Lo_grades_query.c.term.like('13'), 'Fall 2016'),
                                              (Lo_grades_query.c.term.like('14'), 'Spring 2017'),
                                              (Lo_grades_query.c.term.like('15'), 'Fall 2017'),
