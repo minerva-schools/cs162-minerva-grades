@@ -188,7 +188,7 @@ li {
 }
 
 .text_focus {
-    font-family: Open Sans;
+    font-family: Roboto;
     font-style: normal;
     font-weight: bold;
     font-size: 18px;
@@ -204,7 +204,7 @@ li {
 }
 
 .text_normal {
-    font-family: Open Sans;
+    font-family: Roboto;
     font-style: normal;
     font-weight: normal;
     font-size: 18px;
@@ -234,11 +234,8 @@ li {
 /* Hi User! Welcome! */
 
 .greeting {
-    position: absolute;
-    height: 23px;
-    left: 13px;
-    top: 37px;
-    font-family: Open Sans;
+    padding-top: 50px;
+    font-family: Roboto;
     font-style: normal;
     font-weight: normal;
     font-size: 48px;
@@ -313,6 +310,16 @@ li {
     top: 100px;
 }
 
+/* description */
+.description {
+    display: block;
+    padding: 0 500px 0 350px;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 25px;
+}
+
+
 /* set properties of the additional info box*/
 
 .additional-info {
@@ -336,11 +343,10 @@ input {
 
 /* set properties of the display block*/
 .table {
-    padding-top:119px;
-    padding-right:17px;
+    padding-right:20px;
 }
 
-th.header_name, {
+th.header_name {
   width: 85%;
 }
 
@@ -363,16 +369,22 @@ th.header_name, {
     display: block;
 }
 
-.fixed_header th, .fixed_header td {
-    padding: 5px;
-    text-align: left;
+.fixed_header td {
+    padding: 0 5px;
     width: 400px;
+    text-align: left;
+}
+
+.fixed_header th {
+    padding: 5px;
+    width: 400px;
+    text-align: right;
 }
 
 .fixed_header td {
-    line-height: 60px;
+    line-height: 30px;
     overflow-y:scroll;
-    font-family: Open Sans;
+    font-family: Roboto;
     font-style: normal;
     font-weight: 600;
     font-size: 12px;
@@ -382,7 +394,7 @@ th.header_name, {
 
 .fixed_header th {
     color: #9FA2B4;
-    font-family: Open Sans;
+    font-family: Roboto;
     font-style: normal;
     font-weight: bold;
     font-size: 14px;
@@ -409,16 +421,22 @@ th.header_name, {
     display: block;
 }
 
-.fixed_header_hc th, .fixed_header_hc td {
+.fixed_header_hc td {
     padding: 5px;
     text-align: left;
+    width: 100px;
+}
+
+.fixed_header_hc th {
+    padding: 5px;
+    text-align: right;
     width: 400px;
 }
 
 .fixed_header_hc td {
-    line-height: 60px;
+    line-height: 30px;
     overflow-y:scroll;
-    font-family: Open Sans;
+    font-family: Roboto;
     font-style: normal;
     font-weight: 600;
     font-size: 12px;
@@ -428,7 +446,7 @@ th.header_name, {
 
 .fixed_header_hc th {
     color: #9FA2B4;
-    font-family: Open Sans;
+    font-family: Roboto;
     font-style: normal;
     font-weight: bold;
     font-size: 14px;
@@ -462,15 +480,9 @@ th.header_name, {
 
 .table-title {
     /* Course Info */
+    padding: 20px 50px;
 
-
-    position: absolute;
-    height: 30px;
-    left: 4px;
-    right: 336px;
-    top: 37px;
-
-    font-family: Open Sans;
+    font-family: Roboto;
     font-style: normal;
     font-weight: bold;
     font-size: 19px;
@@ -487,19 +499,15 @@ th.header_name, {
 .select-frame {
     position: absolute;
     height: 70px;
-    left: 1010px;
-    right: 50px;
+    left: 950px;
+    right: 100px;
     top: 230px;
 
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 }
 
 .select-bound {
-    position: absolute;
-    left: 0px;
-    right: 0px;
-    top: 0px;
-    bottom: 0px;
+   padding: 35px;
 
     /* Gray 6 */
 
@@ -516,7 +524,7 @@ th.header_name, {
     width: 181px;
     top: 20px;
 
-    font-family: Open Sans;
+    font-family: Roboto;
     font-style: normal;
     font-weight: bold;
     font-size: 18px;
@@ -528,7 +536,7 @@ th.header_name, {
     top: 15.62%;
     bottom: 15.62%;
 
-    font-family: Open Sans;
+    font-family: Roboto;
     font-style: normal;
     font-weight: bold;
     font-size: 18px;
@@ -536,4 +544,20 @@ th.header_name, {
     color:white;
     margin: 5px;
     border-radius: 10px;
+}
+
+.vega-embed summary {
+    display: none !important;
+}
+
+.true-transfer {
+    color:green
+}
+
+.false-transfer {
+    color:red
+}
+
+.hover-note {
+    padding: 250px 50px;    
 }

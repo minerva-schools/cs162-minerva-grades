@@ -19,13 +19,26 @@ def course_grade():
         source = pd.read_sql(grade_calculations.Co_grade_query(user_id=session_id).statement, db.session.bind)
 
         # make chart here
-        chart = Chart(
-            data=source, height=336, width=400).mark_bar().encode(
+        bar = alt.Chart(
+            data=source).mark_bar().encode(
             Y('cograde:Q',
               scale=Scale(domain=(0, 5))
               ),
-            X('course:N'),
-            color=alt.Color('course:N', legend=None)).interactive()
+            alt.X('course:N',
+                    sort=alt.EncodingSortField(field= "cograde", op="sum", order = "descending")),
+            #color=alt.Color('course:N', legend=None))#.interactive()
+            color=alt.Color('major:N'))#.interactive()
+
+
+        line = alt.Chart(source).mark_rule(color='red').encode(
+                 y='mean(cograde):Q'
+                )
+        chart = alt.layer(
+            bar, line
+        ).properties(
+            width=480, height=336
+        )
+
         # always return to json.
         return chart.to_json()
     else:
@@ -87,13 +100,16 @@ def hc_grade():
     if selected_course == None:
         HcData = pd.read_sql(db.session.query(Hc).filter_by(user_id=session_id).statement, db.session.bind)
         final = Chart(
-            data=HcData, height=1000, width=390).mark_bar().encode(
+            data=HcData, height=1000, width=380).mark_bar().encode(
             X('mean:Q',
               axis=alt.Axis(title='HC Forum Score'),
               scale=Scale(domain=(0, 5))
               ),
-            Y('name:N', axis=alt.Axis(title=None), sort='-x'),
-            color='course:N').interactive()
+            alt.Y('name:N',
+            sort=alt.EncodingSortField(field= "mean", op="sum", order = "descending")
+            ,axis=alt.Axis(title=None)
+            ),
+            color='course:N')#.interactive()
     else:
         # query data
         df = grade_calculations.hc_grade_over_time(session_id, selected_course)
@@ -242,7 +258,7 @@ def single_hc_grade(hc):
 
     line = alt.Chart(df, height=400, width=800).mark_line().encode(
         alt.X('Date:T', axis=alt.Axis(title=None, format=("%Y-%m-%d"), labelAngle=0)),
-        alt.Y('Grade:Q', title=None), color='Transfer:N').properties(width=900, height=360)
+        alt.Y('Grade:Q', title=None), color='Transfer:N').properties(width=850, height=360)
 
     points = line.mark_point(filled=True).encode(
         alt.X('Date:T', axis=alt.Axis(title=None, format=("%Y-%m-%d"), labelAngle=0)),

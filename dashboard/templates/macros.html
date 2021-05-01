@@ -66,7 +66,11 @@
                 <td><a href="/{{user.name}}"> #{{ user.name }} </a></td>
                 <td>{{ user.Courses }}</td>
                 <td>{{ user.hcgrade }}</td>
-                <td>{{ user.transfer }}</td>
+                {% if user.transfer == True %}
+                    <td class="true-transfer">{{ user.transfer }}</td>
+                {% else %}
+                    <td class="false-transfer">{{ user.transfer }}</td>
+                {% endif %}
             </tr>
             {% endfor %}
         </tbody>
